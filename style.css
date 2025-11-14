@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Outfit", sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.hero {
+    background-image: url("images/thrift_bkg.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+}
+
+.left-group {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 35px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    font-size: 16px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    opacity: 0.6;
+}
+
+.right-links {
+    display: flex;
+    gap: 20px;
+}
+
+.right-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+
+.right-links a:hover {
+    opacity: 0.6;
+}
+
+.search-title {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+}
+
+.search-title-text {
+    font-size: 40px;
+    color: white;
+    text-align: center;
+}
+
+.search-container {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 60%;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 40px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* responsive nav bar */
+@media (max-width: 700px) {
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 20px;
+        background: white;
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+
+        width: auto;                     
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+
+        border: 1px solid #eee;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+}

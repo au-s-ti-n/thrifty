@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thrifty</title>
+
+    <!-- Google Font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+    </style>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <nav>
+        <div class="left-group">
+            <!-- Mobile menu button -->
+            <button class="menu-btn" id="menu-btn">☰</button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="logo">[logo]</a>
+                <a href="#">Women</a>
+                <a href="#">Men</a>
+                <a href="#">Kids</a>
+                <a href="#">Sports</a>
+                <a href="#">Trending</a>
+            </div>
+        </div>
+
+        <div class="right-links">
+            <a href="#">🛒</a>
+            <a href="#">Log In</a>
+            <a href="#">Sign Up</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="search-title">
+            <h1 class="search-title-text">What will you thrift today?</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search for clothes..." />
+        </div>
+    </section>
+
+    <!-- Mobile menu script -->
+    <script>
+        const menuBtn = document.getElementById("menu-btn");
+        const navLinks = document.getElementById("nav-links");
+
+        menuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("open");
+        });
+    </script>
+
+</body>
+</html>
