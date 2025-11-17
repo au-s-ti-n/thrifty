@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thrifty</title>
+    <title>Log In</title>
 
-    <!-- Google Font -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
     </style>
@@ -32,22 +32,22 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="search-title">
-            <h1 class="search-title-text">What will you thrift today?</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search for clothes..." />
-        </div>
-    </section>
+    <div class="login-container">
+        <h2 class="login-title">Welcome back!</h2>
 
-    <p>Browse local thrift stores from your home. Sustainble. Affordable. Unique.</p>
-    <br />
-    <p>Featured items...</p>
-    <br />
-    <p>work in progress</p>
+        <form id="loginForm">
+            <input class="login-input" type="email" id="email" placeholder="Email" required />
+            <input class="login-input" type="password" id="password" placeholder="Password" required />
+
+            <button type="submit" class="login-button">Log In</button>
+        </form>
+
+        <p class="signup">Don't have an account? <a href="#">Sign up</a></p>
+    </div>
 
     <script src="main.js"></script>
-    
+    <script src="auth.js"></script>
 </body>
+
+
 </html>
