@@ -1,4 +1,3 @@
-
 // handles customer and store manager profile routing logic
 document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
@@ -8,7 +7,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     // TEMPORARY USER DATABASE
     const mockUsers = {
         "customer@example.com": { role: "customer" },
-        "store@example.com": { role: "store_manager" }
+        "store@example.com": { role: "manager" }
     };
 
     const user = mockUsers[email];
@@ -19,10 +18,11 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     }
 
     sessionStorage.setItem("role", user.role);
+    sessionStorage.setItem("loggedIn", "true");
 
     if (user.role === "customer") {
         window.location.href = "customer.html";
-    } else if (user.role === "store_manager") {
+    } else if (user.role === "manager") {
         window.location.href = "manager.html";
     }
 });
