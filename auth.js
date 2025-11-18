@@ -18,7 +18,7 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
         return;
     }
 
-    localStorage.setItem("role", user.role);
+    sessionStorage.setItem("role", user.role);
 
     if (user.role === "customer") {
         window.location.href = "customer.html";

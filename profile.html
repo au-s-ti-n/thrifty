@@ -1,0 +1,13 @@
+<script>
+const role = sessionStorage.getItem("role");
+
+if (role === "manager") {
+    window.location.replace("manager.html");
+} 
+else if (role === "customer") {
+    window.location.replace("customer.html");
+} 
+else {
+    window.location.replace("login.html");
+}
+</script>
