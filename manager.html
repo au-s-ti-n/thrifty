@@ -4,15 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Thrifty</title>
 
-    <!-- Google Font -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-    </style>
-
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <script src="nav.js"></script>
     <nav>
         <div class="left-group">
             <button class="menu-btn" id="menu-btn">☰</button>
@@ -33,71 +29,38 @@
     </nav>
     <div class="dashboard-container">
         <div class="dashboard-content">
-            <h2>Goodwill - Benton Street</h2>
-            <p>Store Manager Dashboard</p>
+            <h1>Store Manager Dashboard - Goodwill Benton Street</h1>
             
             <div class="section">
-                <h2>Quick Stats (This Month)</h2>
+                <h2>Today's Summary</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>156</h3>
-                        <p>Items Listed</p>
+                        <h3>New Items Listed</h3>
+                        <p>14</p>
                     </div>
                     <div class="stat-card">
-                        <h3>89</h3>
-                        <p>Items Sold</p>
+                        <h3>Reservations</h3>
+                        <p>3</p>
                     </div>
                     <div class="stat-card">
-                        <h3>2,340</h3>
-                        <p>Profile Views</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>$1,847</h3>
-                        <p>Revenue Generated</p>
+                        <h3>Daily Sales Goal</h3>
+                        <p>75%</p>
                     </div>
                 </div>
             </div>
             
             <div class="section">
-                <h3>Your Environmental Impact</h3>
-                <p>Your store has diverted 2,100 lbs of textiles from landfills this month!</p>
-                <p>That's equivalent to 890 lbs of CO2 saved. Way to go!</p>
-            </div>
-            
-            <div class="section">
-                <h2>Recent Listings</h2>
-                
+                <h2>Item Inventory</h2>
                 <div class="item-card">
-                    <h3>Levi's 501 Jeans</h3>
-                    <p>Listed 3 days ago - 47 views - 3 saves</p>
-                    <p>$18 - Status: Active</p>
-                    <div class="button-group">
-                        <button class="login-button">Edit</button>
-                        <button class="login-button">Mark Sold</button>
-                    </div>
+                    <h3>Items Awaiting Listing (21)</h3>
+                    <p>New items that have been scanned and require photos/descriptions before going live.</p>
+                    <button class="btn-primary">Go to Listing Queue</button>
                 </div>
-                
                 <div class="item-card">
-                    <h3>Nike Air Max</h3>
-                    <p>Listed 5 days ago - 123 views - 8 saves</p>
-                    <p>$25 - Status: Reserved</p>
-                    <div class="button-group">
-                        <button class="login-button">Edit</button>
-                        <button class="login-button">Mark Sold</button>
-                    </div>
+                    <h3>High-Value Items (7)</h3>
+                    <p>Vintage Levi's, Patagonia, etc.</p>
+                    <button class="btn-primary">View High-Value Items</button>
                 </div>
-                
-                <div class="item-card">
-                    <h3>Vintage Band Tee</h3>
-                    <p>Listed 1 week ago - 89 views - 12 saves</p>
-                    <p>$12 - Status: Active</p>
-                    <div class="button-group">
-                        <button class="login-button">Edit</button>
-                        <button class="login-button">Mark Sold</button>
-                    </div>
-                </div>
-                
-                <button class="login-button">View All Listings (156)</button>
             </div>
             
             <div class="section">
@@ -107,30 +70,30 @@
                     <h4>Emma Rodriguez</h4>
                     <p>Reserved: Nike Air Max ($25)</p>
                     <p>Expires: Today at 2:45pm</p>
-                    <button class="login-button">Contact Customer</button>
+                    <button class="btn-primary">Contact Customer</button>
                 </div>
                 
                 <div class="item-card">
                     <h4>Marcus Chan</h4>
                     <p>Reserved: Patagonia Fleece ($35)</p>
                     <p>Expires: Tomorrow at 11:20am</p>
-                    <button class="login-button">Contact Customer</button>
+                    <button class="btn-primary">Contact Customer</button>
                 </div>
                 
                 <div class="item-card">
                     <h4>Sarah Johnson</h4>
                     <p>Reserved: Vintage Jeans ($18)</p>
                     <p>Expires: Tomorrow at 9:15pm</p>
-                    <button class="login-button">Contact Customer</button>
+                    <button class="btn-primary">Contact Customer</button>
                 </div>
             </div>
             
             <div class="section">
                 <h3>Quick Actions</h3>
-                <button class="login-button">Bulk Upload Items</button>
-                <button class="login-button">Download Sales Report</button>
-                <button class="login-button">Update Store Hours</button>
-                <button class="login-button">View Analytics</button>
+                <button class="btn-primary">Bulk Upload Items</button>
+                <button class="btn-primary">Download Sales Report</button>
+                <button class="btn-primary">Update Store Hours</button>
+                <button class="btn-primary">View Analytics</button>
             </div>
         </div>
     </div>

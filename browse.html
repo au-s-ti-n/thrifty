@@ -2,17 +2,13 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thrifty</title>
-
-    <!-- Google Font -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-    </style>
+    <title>Browse - Thrifty</title>
 
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+    <script src="nav.js"></script>
     <nav>
         <div class="left-group">
             <button class="menu-btn" id="menu-btn">☰</button>
@@ -31,8 +27,124 @@
             <a id="logoutLink" href="#" style="display:none;">Log Out</a>
         </div>
     </nav>
-    <br /> <br /> <br />
-    <h1>Browse</h1>
+
+    <div class="browse-container">
+        <aside class="filter-sidebar">
+            <h3>Filter Results</h3>
+
+            <div class="filter-group">
+                <h4>Category</h4>
+                <label class="filter-option">
+                    <input type="checkbox" checked> Jeans (24)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Shirts (12)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Shoes (8)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Accessories (5)
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Size</h4>
+                <label class="filter-option">
+                    <input type="checkbox"> 32x30
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> 34
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> M
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> L
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <div class="price-inputs">
+                    <input type="number" placeholder="Min" min="0">
+                    <input type="number" placeholder="Max" min="0">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Distance</h4>
+                <label class="filter-option">
+                    <input type="radio" name="distance"> < 2 miles
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="distance" checked> < 5 miles
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="distance"> < 10 miles
+                </label>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="item-card" onclick="window.location.href='item1.html'">
+                <div class="item-image">[Photo]</div>
+                <div class="item-details">
+                    <h3>Vintage Levi's 501 Jeans</h3>
+                    <p class="item-meta">Size: 32x30 | Brand: Levi's</p>
+                    <div class="item-price">$18 <span class="retail">$70 Retail</span></div>
+                    <div class="item-description">
+                        Original fit, straight leg. Well-worn for a great vintage look.
+                    </div>
+                    <div class="item-store">
+                        <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary">View Details</button>
+                        <button class="btn-secondary">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-card" onclick="window.location.href='item2.html'">
+                <div class="item-image">[Photo]</div>
+                <div class="item-details">
+                    <h3>Wrangler Relaxed Fit Jeans</h3>
+                    <p class="item-meta">Size: 34x32 | Brand: Wrangler</p>
+                    <div class="item-price">$16</div>
+                    <div class="item-description">
+                        Regular fit jeans with straight leg. Good condition with normal wear.
+                    </div>
+                    <div class="item-store">
+                        <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary">View Details</button>
+                        <button class="btn-secondary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="map-widget">
+                <h3>Store Locations</h3>
+                <div class="map-placeholder">[Map View]</div>
+            </div>
+            
+            <div class="tip-box">
+                <h4>Thrifting Tips</h4>
+                <p>Items go fast! Reserve to hold for 24 hours.</p>
+            </div>
+            
+            <div class="impact-box">
+                <h4>Environmental Impact</h4>
+                <p>These 24 items represent 120 lbs of CO2 saved vs. buying new</p>
+            </div>
+        </aside>
+    </div>
 
     <script src="nav.js"></script>
 </body>
