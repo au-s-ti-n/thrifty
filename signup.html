@@ -31,6 +31,24 @@
         </div>
     </nav>
 
+    <div class="signup-container">
+        <h2 class="signup-title">Create an account</h2>
+
+        <form id="signupForm">
+            <input class="signup-input" type="email" id="email" placeholder="Email" required />
+            <input class="signup-input" type="password" id="password" placeholder="Password" required />
+
+            <select class="role-select" id="role">
+                <option value="customer">Customer</option>
+                <option value="manager">Store Manager</option>
+            </select>
+
+            <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+
+        <p class="signup">Already signed up? <a href="login.html">Log In</a></p>
+    </div>
+
     <script src="nav.js"></script>
 </body>
 </html>
