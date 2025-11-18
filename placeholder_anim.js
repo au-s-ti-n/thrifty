@@ -8,7 +8,7 @@ const phrases = [
     "Uniqlo hoodies",
     "formal suits",
     "Patagonia jackets",
-    "button-ups",
+    "aviator sunglasses",
     "Christmas socks"
 ]; // could randomize first phrase upon refresh in the future
 
