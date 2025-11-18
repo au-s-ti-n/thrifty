@@ -1,3 +1,6 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +13,7 @@ body, html {
     overflow-x: hidden;
 }
 
+/* Hero Section */
 .hero {
     background-image: url("images/thrift_bkg.jpg");
     background-size: cover;
@@ -19,6 +23,7 @@ body, html {
     position: relative;
 }
 
+/* Navigation */
 nav {
     position: fixed;
     top: 0;
@@ -42,6 +47,7 @@ nav {
 .logo {
     font-size: 16px;
     margin-right: 35px;
+    font-weight: 700;
 }
 
 .nav-links {
@@ -50,150 +56,128 @@ nav {
     font-size: 16px;
 }
 
-a {
+.nav-links a {
     text-decoration: none;
     color: black;
     font-weight: 500;
-    transition: color 0.2s;
 }
 
-a:hover {
-    color: #555;
+.nav-links a:hover {
+    opacity: 0.7;
+}
+
+.right-links {
+    display: flex;
+    gap: 20px;
 }
 
 .right-links a {
-    margin-left: 15px;
-    padding: 8px 15px;
-    border-radius: 8px;
-    transition: background-color 0.2s;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
 }
 
 .right-links a:hover {
-    background-color: #f5f5f5;
+    opacity: 0.6;
 }
 
 .menu-btn {
-    display: none; /* Hide on desktop */
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Responsive nav bar */
+@media (max-width: 730px) {
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 50px;
+        left: 20px;
+        background: white;
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+        width: auto;                     
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        border: 1px solid #eee;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
 }
 
 /* Home Page Search */
 .search-title {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -150%);
-    text-align: center;
+    top: 45%;
     width: 100%;
 }
 
 .search-title-text {
-    font-size: 4em;
+    font-size: 40px;
     color: white;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    font-weight: 700;
+    text-align: center;
+    text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 
 .search-container {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 600px;
+    transform: translate(-50%, 0%);
+    width: 60%;
 }
 
-#search-input {
+.search-container input {
     width: 100%;
-    padding: 20px 25px;
-    border-radius: 12px;
+    padding: 15px 20px;
     border: none;
+    border-radius: 40px;
     font-size: 18px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.85);
 }
 
-#search-input::placeholder {
-    color: #aaa;
-    opacity: 1; /* Override default opacity */
-}
-
-/* Auth Page Layouts */
+/* Auth Pages */
 .login-container, .signup-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 400px;
+    width: 350px;
+    padding: 30px;
     background: white;
-    padding: 35px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
+.login-container h2, .signup-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
 .login-title, .signup-title {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 24px;
 }
 
 .login-input, .signup-input {
     width: 100%;
     padding: 14px;
     margin-bottom: 15px;
-    border-radius: 12px;
     border: 1px solid #ccc;
+    border-radius: 12px;
     font-size: 15px;
+    outline: none;
 }
-
-/* --- CONSOLIDATED BUTTON STYLES (New Global Standard) --- */
-
-/* Base Button Styles */
-.btn-primary, .btn-secondary {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px; /* Standard for smaller elements */
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
-    text-align: center;
-    text-decoration: none; /* For link buttons */
-    display: inline-block;
-}
-
-/* Primary Button (Dark/Black) */
-.btn-primary {
-    background-color: black;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #333;
-    transform: translateY(-1px);
-}
-
-/* Secondary Button (Light/Border) */
-.btn-secondary {
-    background-color: white;
-    color: black;
-    border: 1px solid #ddd;
-}
-
-.btn-secondary:hover {
-    background-color: #f5f5f5;
-    transform: translateY(-1px);
-}
-
-/* Full-width button override for Auth forms (keeps the larger 12px radius) */
-.login-container .btn-primary,
-.signup-container .btn-primary {
-    width: 100%;
-    padding: 14px 0;
-    border-radius: 12px; 
-    font-size: 16px;
-    transform: none; 
-}
-/* --- END CONSOLIDATED BUTTON STYLES --- */
 
 .role-select {
     width: 100%;
@@ -202,6 +186,50 @@ a:hover {
     border-radius: 12px;
     border: 1px solid #ccc;
     font-size: 15px;
+}
+
+.login-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-footer a {
+    color: black;
+    font-weight: 600;
+}
+
+/* Button Styles */
+.btn-primary, .login-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+}
+
+.btn-primary:hover, .login-button:hover {
+    opacity: 0.7;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background: #f5f5f5;
 }
 
 /* Dashboard Styles */
@@ -236,28 +264,22 @@ a:hover {
 }
 
 .stat-card h3 {
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #555;
+    font-size: 32px;
+    margin-bottom: 5px;
 }
 
 .stat-card p {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 14px;
+    color: #666;
 }
 
 .section {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
 }
 
-.section h2, .section h3 {
-    margin-bottom: 15px;
-}
-
-/* --- BROWSE PAGE STYLES (Moved from browse.html) --- */
-
+/* Browse Page */
 .browse-container {
     display: grid;
     grid-template-columns: 250px 1fr 280px;
@@ -303,71 +325,73 @@ a:hover {
     align-items: center;
     margin: 8px 0;
     font-size: 14px;
-    cursor: pointer;
 }
 
 .filter-option input {
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
 .price-inputs {
     display: flex;
     gap: 10px;
+    margin-top: 10px;
 }
 
 .price-inputs input {
-    width: 50%;
+    width: 100%;
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 14px;
 }
 
 .main-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .item-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
-    cursor: pointer;
     display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.2s;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
 }
 
 .item-card:hover {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
 }
 
 .item-image {
-    width: 100%;
-    height: 200px;
-    background: #f0f0f0;
+    width: 180px;
+    height: 180px;
+    background: #f5f5f5;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    flex-shrink: 0;
     color: #999;
-    border-radius: 8px 8px 0 0;
-    overflow: hidden;
+    font-size: 13px;
 }
 
 .item-details {
-    padding: 15px;
-    flex-grow: 1;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 .item-details h3 {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 8px;
-    color: black;
 }
 
 .item-meta {
@@ -407,7 +431,17 @@ a:hover {
 .item-actions {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 12px;
+}
+
+.item-actions .btn-primary {
+    width: auto;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.item-actions .btn-secondary {
+    width: auto;
 }
 
 .right-sidebar {
@@ -417,42 +451,68 @@ a:hover {
 }
 
 .map-widget {
-    margin-bottom: 25px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.map-widget h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
 }
 
 .map-placeholder {
-    height: 150px;
-    background: #eee;
+    width: 100%;
+    height: 250px;
+    background: #f5f5f5;
     border-radius: 8px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #999;
     font-size: 14px;
 }
 
-.tip-box, .impact-box {
-    background: #f9f9f9;
+.tip-box {
+    background: white;
     padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
 }
 
-.tip-box h4, .impact-box h4 {
-    font-size: 16px;
+.tip-box h4 {
     margin-bottom: 8px;
-    font-weight: 600;
+    font-size: 16px;
 }
 
-.tip-box p, .impact-box p {
-    font-size: 14px;
+.tip-box p {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.impact-box {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.impact-box h4 {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.impact-box p {
+    font-size: 13px;
     color: #555;
     line-height: 1.4;
 }
 
-/* --- ITEM DETAIL PAGE STYLES (Moved from item1.html/item2.html) --- */
-
+/* Item Detail Page */
 .item-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -490,13 +550,13 @@ a:hover {
 .main-image {
     width: 100%;
     height: 500px;
-    background: #f0f0f0;
+    background: #f5f5f5;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
     color: #999;
+    font-size: 16px;
     margin-bottom: 15px;
 }
 
@@ -508,25 +568,27 @@ a:hover {
 .thumbnail {
     width: 80px;
     height: 80px;
-    background: #f0f0f0;
+    background: #f5f5f5;
     border-radius: 8px;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
+    border: 2px solid transparent;
 }
 
-.thumbnail:hover, .thumbnail.active {
-    opacity: 1;
-    border: 2px solid black;
+.thumbnail:hover {
+    border-color: #333;
+}
+
+.thumbnail.active {
+    border-color: #333;
 }
 
 .details-section h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 15px;
 }
 
-.details-section p.meta {
-    font-size: 16px;
+.details-section .meta {
+    font-size: 14px;
     color: #666;
     margin-bottom: 20px;
 }
@@ -534,17 +596,13 @@ a:hover {
 .price-tag {
     font-size: 42px;
     font-weight: 700;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+    margin: 20px 0;
 }
 
 .price-tag .retail {
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 16px;
     color: #999;
-    text-decoration: line-through;
+    font-weight: 400;
 }
 
 .detail-actions {
@@ -553,74 +611,58 @@ a:hover {
     margin-bottom: 30px;
 }
 
-.detail-actions .btn-primary, .detail-actions .btn-secondary {
-    padding: 15px 30px;
-    font-size: 18px;
-    flex-grow: 1;
+.detail-actions .btn-primary,
+.detail-actions .btn-secondary {
+    width: auto;
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.description-box {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
 }
 
 .description-box h2 {
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
 }
 
 .description-box p {
     line-height: 1.7;
     color: #555;
-    margin-bottom: 15px;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 
 .info-box {
     background: #f9f9f9;
     padding: 20px;
     border-radius: 12px;
-    margin-bottom: 25px;
+    margin: 25px 0;
 }
 
 .info-box h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 15px;
 }
 
 .info-row {
     display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px dotted #ddd;
+    margin: 10px 0;
     font-size: 15px;
-}
-
-.info-row:last-child {
-    border-bottom: none;
 }
 
 .info-label {
-    color: #666;
-}
-
-.info-value strong {
     font-weight: 600;
+    width: 120px;
 }
 
-.impact-box {
-    background: #e6f9e6; /* light green for eco-friendly impact */
-    border: 1px solid #c9e9c9;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.impact-box h3 {
-    font-size: 18px;
-    margin-bottom: 12px;
-    color: #1a73e8; /* Blue for a pop of color/emphasis */
-}
-
-.impact-box p {
-    line-height: 1.6;
+.info-value {
     color: #555;
-    font-size: 15px;
 }
 
 .similar-items {
@@ -653,30 +695,54 @@ a:hover {
 
 .similar-image {
     width: 100%;
-    height: 150px;
-    background: #f0f0f0;
+    height: 180px;
+    background: #f5f5f5;
     border-radius: 8px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
     color: #999;
+    font-size: 12px;
+    margin-bottom: 12px;
 }
 
 .similar-card h3 {
     font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 .similar-card .meta {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .similar-card .price {
     font-size: 20px;
     font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .browse-container {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-sidebar, .right-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 968px) {
+    .item-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .image-section {
+        position: static;
+    }
+
+    .similar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
