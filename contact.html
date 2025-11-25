@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Contact</title>
 
     <link rel="stylesheet" href="style.css" />
@@ -26,9 +27,34 @@
             <a id="logoutLink" href="#" style="display:none;">Log Out</a>
         </div>
     </nav>
-    <br /> <br /> <br />
-    <h1>Contact Us</h1>
+    
+    <div class="contact-container">
+        <h2>Contact Us</h2>
+
+        <form id="contactForm" class="contact-form">
+            
+            <label>First Name</label>
+            <input id="firstName" type="text" placeholder="Enter first name">
+            <p class="error" id="firstNameError"></p>
+
+            <label>Last Name</label>
+            <input id="lastName" type="text" placeholder="Enter last name">
+            <p class="error" id="lastNameError"></p>
+
+            <label>Email</label>
+            <input id="email" type="email" placeholder="Enter your email">
+            <p class="error" id="emailError"></p>
+
+            <label>Message</label>
+            <textarea id="message" placeholder="Enter your message"></textarea>
+            <p class="error" id="messageError"></p>
+
+            <button type="submit" class="btn-primary">Send message</button>
+            <p id="status"></p>
+        </form>
+    </div>
 
     <script src="nav.js"></script>
+    <script src="contact.js"></script>
 </body>
 </html>
