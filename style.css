@@ -825,3 +825,55 @@ nav {
     font-size: 14px;
     text-align: center;
 }
+
+/* Clear Filters Button */
+.clear-filters-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.clear-filters-btn:hover {
+    background: #e0e0e0;
+    border-color: #999;
+}
+
+/* Hidden class for filtered items */
+.hidden {
+    display: none !important;
+}
+
+/* Improve button hover states */
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+/* Make similar cards more interactive */
+.similar-card {
+    transition: all 0.3s ease;
+}
+
+.similar-card:active {
+    transform: translateY(0);
+}
+
+/* Thumbnail hover effect improvement */
+.thumbnail {
+    transition: all 0.2s ease;
+}
+
+.thumbnail:active {
+    transform: scale(0.95);
+}

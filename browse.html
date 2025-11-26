@@ -34,79 +34,83 @@
             <div class="filter-group">
                 <h4>Category</h4>
                 <label class="filter-option">
-                    <input type="checkbox" checked> Jeans (24)
+                    <input type="checkbox" id="filter-jeans" data-category="jeans" checked> Jeans (24)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> Shirts (12)
+                    <input type="checkbox" id="filter-shirts" data-category="shirts"> Shirts (12)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> Shoes (8)
+                    <input type="checkbox" id="filter-shoes" data-category="shoes"> Shoes (8)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> Accessories (5)
+                    <input type="checkbox" id="filter-accessories" data-category="accessories"> Accessories (5)
                 </label>
             </div>
 
             <div class="filter-group">
                 <h4>Size</h4>
                 <label class="filter-option">
-                    <input type="checkbox"> 32x30
+                    <input type="checkbox" id="filter-32x30" data-size="32x30"> 32x30
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> 34
+                    <input type="checkbox" id="filter-34x32" data-size="34x32"> 34x32
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> M
+                    <input type="checkbox" id="filter-m" data-size="M"> M
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox"> L
+                    <input type="checkbox" id="filter-l" data-size="L"> L
                 </label>
             </div>
 
             <div class="filter-group">
                 <h4>Price Range</h4>
                 <div class="price-inputs">
-                    <input type="number" placeholder="Min" min="0">
-                    <input type="number" placeholder="Max" min="0">
+                    <input type="number" id="price-min" placeholder="Min" min="0">
+                    <input type="number" id="price-max" placeholder="Max" min="0">
                 </div>
             </div>
 
             <div class="filter-group">
                 <h4>Distance</h4>
                 <label class="filter-option">
-                    <input type="radio" name="distance"> < 2 miles
+                    <input type="radio" name="distance" value="2" data-distance="2"> < 2 miles
                 </label>
                 <label class="filter-option">
-                    <input type="radio" name="distance" checked> < 5 miles
+                    <input type="radio" name="distance" value="5" data-distance="5" checked> < 5 miles
                 </label>
                 <label class="filter-option">
-                    <input type="radio" name="distance"> < 10 miles
+                    <input type="radio" name="distance" value="10" data-distance="10"> < 10 miles
                 </label>
             </div>
+
+            <button class="clear-filters-btn" id="clear-filters">Clear All Filters</button>
         </aside>
 
         <main class="main-content">
-            <div class="item-card" onclick="window.location.href='item1.html'">
-                <div class="item-image">[Photo]</div>
+            <div class="item-card" data-category="jeans" data-size="32x30" data-price="18" data-distance="2.3">
+                <div class="item-image">
+                    <img src="images/lee/lee_front.jpg" alt="Lee Regular Fit Jeans" class="item-image-actual">
+                </div>
                 <div class="item-details">
-                    <h3>Vintage Levi's 501 Jeans</h3>
-                    <p class="item-meta">Size: 32x30 | Brand: Levi's</p>
-                    <div class="item-price">$18 <span class="retail">$70 Retail</span></div>
+                    <h3>Lee Regular Fit Jeans</h3>
+                    <p class="item-meta">Size: 32x30 | Brand: Lee</p>
+                    <div class="item-price">$14 <span class="retail">$50 Retail</span></div>
                     <div class="item-description">
-                        Original fit, straight leg. Well-worn for a great vintage look.
+                        Classic Regular Fit Jeans. Very good condition, and gently used with minimal signs of wear.
                     </div>
                     <div class="item-store">
                         <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
                         <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-primary">View Details</button>
-                        <button class="btn-secondary">Save</button>
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='lee_regular_fit_item1.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
                     </div>
                 </div>
             </div>
 
-            <div class="item-card" onclick="window.location.href='wranglers_relaxed_fit_item2.html'">
+            <div class="item-card" data-category="jeans" data-size="34x32" data-price="16" data-distance="2.3">
                 <div class="item-image">
                     <img src="images/wranglers/wranglers_main_image.jpg" alt="wranglers jeans front view" class="item-image-actual">
                 </div>
@@ -122,8 +126,52 @@
                         <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-primary">View Details</button>
-                        <button class="btn-secondary">Save</button>
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='wranglers_relaxed_fit_item2.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-card" data-category="shirts" data-size="M" data-price="12" data-distance="4.5">
+                <div class="item-image">
+                    <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Vintage+Tee" alt="Vintage Band T-Shirt" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Vintage Band T-Shirt</h3>
+                    <p class="item-meta">Size: M | Brand: Vintage</p>
+                    <div class="item-price">$12 <span class="retail">$35 Retail</span></div>
+                    <div class="item-description">
+                        Classic concert tee from the 90s. Soft, worn-in feel with authentic vintage graphics.
+                    </div>
+                    <div class="item-store">
+                        <strong>Thrifty Village</strong> - 4.5 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 6pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='browse.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-card" data-category="shoes" data-size="L" data-price="25" data-distance="6.8">
+                <div class="item-image">
+                    <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Nike+Shoes" alt="Nike Running Shoes" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Nike Running Shoes</h3>
+                    <p class="item-meta">Size: 10 | Brand: Nike</p>
+                    <div class="item-price">$25 <span class="retail">$90 Retail</span></div>
+                    <div class="item-description">
+                        Gently used Nike running shoes in excellent condition. Minor wear on soles.
+                    </div>
+                    <div class="item-store">
+                        <strong>Salvation Army - Downtown</strong> - 6.8 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='browse.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
                     </div>
                 </div>
             </div>
@@ -132,7 +180,16 @@
         <aside class="right-sidebar">
             <div class="map-widget">
                 <h3>Store Locations</h3>
-                <div class="map-placeholder">[Map View]</div>
+                <div class="map-placeholder">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3172.3325395304414!2d-122.01116148467422!3d37.33463524513264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb59127ce078f%3A0x18e1c3ce7becf1b!2sApple%20Park!5e0!3m2!1sen!2sus!4v1637309850935!5m2!1sen!2sus" 
+                        width="100%" 
+                        height="250" 
+                        style="border:0; border-radius: 8px;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
             </div>
             
             <div class="tip-box">
@@ -148,5 +205,20 @@
     </div>
 
     <script src="nav.js"></script>
+    <script src="browse.js"></script>
+    <script>
+        // Toggle save button functionality
+        function toggleSave(btn) {
+            if (btn.textContent === 'Save') {
+                btn.textContent = '✓ Saved';
+                btn.style.background = '#333';
+                btn.style.color = 'white';
+            } else {
+                btn.textContent = 'Save';
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            }
+        }
+    </script>
 </body>
 </html>

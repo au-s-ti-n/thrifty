@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lee Regular Fit Jeans</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="left-group">
+            <button class="menu-btn" id="menu-btn">☰</button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="logo">THRIFTY</a>
+                <a href="browse.html">Browse</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+        <div class="right-links">
+            <a id="loginLink" href="login.html">Log In</a>
+            <a id="signupLink" href="signup.html">Sign Up</a>
+            <a id="logoutLink" href="#" style="display:none;">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="item-container">
+        <p class="breadcrumb"><a href="browse.html">Browse</a> > Jeans > Lee Regular Fit Jeans</p>
+
+        <div class="item-layout">
+            <div class="image-section">
+                <div class="main-image">
+                    <img id="main-product-image" src="images/lee/lee_front.jpg" alt="Lee jeans front view" class="main-image-actual">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumbnail active" onclick="changeLeeImage('images/lee/lee_front.jpg', this)">
+                        <img src="images/lee/lee_front.jpg" alt="Lee's Jeans front view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_back.jpg', this)">
+                        <img src="images/lee/lee_back.jpg" alt="Lee's Jeans back view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_side.jpg', this)">
+                        <img src="images/lee/lee_side.jpg" alt="Lee's Jeans side view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_zoomed_front.jpg', this)">
+                        <img src="images/lee/lee_zoomed_front.jpg" alt="Lee's Jeans front zoomed view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_zoomed_back.jpg', this)">
+                        <img src="images/lee/lee_zoomed_back.jpg" alt="Lee's Jeans back zoomed view" class="thumbnail-actual">
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h1>Lee Regular Fit Jeans</h1>
+                <p class="meta">Men's Apparel | Size: 34x32 | SKU: LJ-REG-M45</p>
+
+                <div class="price-tag">$14 <span class="retail">$50 Retail</span></div>
+
+                <div class="detail-actions">
+                    <button class="btn-primary" id="reserve-btn" onclick="reserveItem()">Reserve Item (24 hr hold)</button>
+                    <button class="btn-secondary" id="save-btn" onclick="saveItem()">Save to List</button>
+                </div>
+
+                <div class="description-box">
+                    <h2>Description</h2>
+                    <p>
+                        Classic Lee Regular Fit jeans in medium wash blue denim. These jeans offer a comfortable, relaxed fit through the seat and thigh with a straight leg opening. Perfect for everyday wear with their timeless style and durable construction.
+                    </p>
+                    <p>
+                        Features a traditional 5-pocket design with zip fly and button closure. The medium wash gives them a versatile look that pairs well with any outfit.
+                    </p>
+                    <p>
+                        <b>Condition:</b> Very Good - gently used with minimal signs of wear. No stains, holes, or significant fading.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Item Details</h3>
+                    <div class="info-row">
+                        <div class="info-label">Brand:</div>
+                        <div class="info-value"><strong>Lee</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Style:</div>
+                        <div class="info-value">Regular Fit, Straight Leg</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Material:</div>
+                        <div class="info-value">99% Cotton, 1% Spandex</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Color:</div>
+                        <div class="info-value">Medium Stonewash Blue</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Rise:</div>
+                        <div class="info-value">Regular Rise</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Care:</div>
+                        <div class="info-value">Machine Wash Cold, Tumble Dry Low</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Store Location</h3>
+                    <div class="info-row">
+                        <div class="info-label">Store:</div>
+                        <div class="info-value"><strong>Goodwill - Benton Street</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Distance:</div>
+                        <div class="info-value">2.3 miles away</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Hours:</div>
+                        <div class="info-value">Open until 8:00 PM today</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Address:</div>
+                        <div class="info-value">1245 Benton Street</div>
+                    </div>
+                </div>
+
+                <div class="impact-box">
+                    <h3>Environmental Impact</h3>
+                    <p>
+                        By purchasing this pre-loved item, you are saving approximately <b>4.5 kg of waste</b> and <b>18 lbs of CO2</b> compared to buying new. Manufacturing a new pair of jeans uses about 1,800 gallons of water - thank you for choosing sustainable fashion!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="similar-items">
+            <h2>Similar Items You Might Like</h2>
+            <div class="similar-grid">
+                <div class="similar-card" onclick="window.location.href='wranglers_relaxed_fit_item2.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler Jeans" style="width: 80%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Wrangler Relaxed Fit</h3>
+                    <p class="meta">Size 34x32</p>
+                    <p class="price">$16</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Levi's+505" alt="Levi's 505" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Levi's 505 Jeans</h3>
+                    <p class="meta">Size 33x32</p>
+                    <p class="price">$18</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Rustler" alt="Rustler Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Rustler Classic Fit</h3>
+                    <p class="meta">Size 34x30</p>
+                    <p class="price">$10</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Dickies" alt="Dickies Work Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Dickies Work Jeans</h3>
+                    <p class="meta">Size 32x32</p>
+                    <p class="price">$14</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+        // Thumbnail image switching functionality (logic is identical to Wrangler page)
+        function changeLeeImage(imageSrc, thumbnail) {
+            const mainImage = document.getElementById('main-product-image');
+            mainImage.src = imageSrc;
+            
+            // Remove active class from all thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+        }
+
+        // Reserve item functionality
+        function reserveItem() {
+            const btn = document.getElementById('reserve-btn');
+            const originalText = btn.textContent;
+            
+            // Change button state
+            btn.textContent = 'Reserved!';
+            btn.style.background = '#4CAF50';
+            btn.disabled = true;
+            
+            // Show expiration time
+            const now = new Date();
+            now.setHours(now.getHours() + 24);
+            const expirationTime = now.toLocaleString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                hour: 'numeric', 
+                minute: '2-digit',
+                hour12: true 
+            });
+            
+            // Add reservation notice
+            const detailActions = document.querySelector('.detail-actions');
+            const notice = document.createElement('p');
+            notice.style.marginTop = '15px';
+            notice.style.padding = '12px';
+            notice.style.background = '#e8f5e9';
+            notice.style.borderRadius = '8px';
+            notice.style.fontSize = '14px';
+            notice.innerHTML = `<strong>✓ Item Reserved!</strong><br>Hold expires: ${expirationTime}`;
+            detailActions.appendChild(notice);
+        }
+
+        // Save item functionality
+        function saveItem() {
+            const btn = document.getElementById('save-btn');
+            
+            if (btn.textContent === 'Save to List') {
+                btn.textContent = '✓ Saved';
+                btn.style.background = '#333';
+                btn.style.color = 'white';
+            } else {
+                btn.textContent = 'Save to List';
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            }
+        }
+    </script>
+</body>
+</html>
