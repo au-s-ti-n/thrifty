@@ -145,28 +145,28 @@
                     <p class="meta">Size 34x32</p>
                     <p class="price">$16</p>
                 </div>
-                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                <div class="similar-card" onclick="window.location.href='item3.html'" style="cursor: pointer;">
                     <div class="similar-image">
-                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Levi's+505" alt="Levi's 505" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        <img src="images/levis/levi505_front.jpg" alt="Levi's 505" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
-                    <h3>Levi's 505 Jeans</h3>
-                    <p class="meta">Size 33x32</p>
+                    <h3>Levi's 505 Regular</h3>
+                    <p class="meta">Size 32x32</p>
                     <p class="price">$18</p>
                 </div>
-                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                <div class="similar-card" onclick="window.location.href='item4.html'" style="cursor: pointer;">
                     <div class="similar-image">
-                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Rustler" alt="Rustler Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        <img src="images/carhartt/carhartt_front.jpg" alt="Carhartt Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
-                    <h3>Rustler Classic Fit</h3>
-                    <p class="meta">Size 34x30</p>
-                    <p class="price">$10</p>
+                    <h3>Carhartt Work Jeans</h3>
+                    <p class="meta">Size 34x34</p>
+                    <p class="price">$17</p>
                 </div>
-                <div class="similar-card" onclick="window.location.href='browse.html'" style="cursor: pointer;">
+                <div class="similar-card" onclick="window.location.href='item7.html'" style="cursor: pointer;">
                     <div class="similar-image">
-                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Dickies" alt="Dickies Work Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        <img src="images/legendarywhitetails/flannel_front.jpg" alt="Flannel Shirt" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
-                    <h3>Dickies Work Jeans</h3>
-                    <p class="meta">Size 32x32</p>
+                    <h3>Buck Camp Flannel</h3>
+                    <p class="meta">Size L</p>
                     <p class="price">$14</p>
                 </div>
             </div>
@@ -197,7 +197,6 @@
             const btn = document.getElementById('reserve-btn');
             
             if (!isReserved) {
-                // RESERVE the item
                 const now = new Date();
                 now.setHours(now.getHours() + 24);
                 expirationTime = now.toLocaleString('en-US', { 
@@ -214,7 +213,6 @@
                 
                 isReserved = true;
             } else {
-                // CANCEL reservation
                 btn.textContent = 'Reserve Item (24 hr hold)';
                 btn.style.background = 'black';
                 btn.classList.remove('reserved');
