@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carhartt Work Jeans</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="left-group">
+            <button class="menu-btn" id="menu-btn">☰</button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="logo">THRIFTY</a>
+                <a href="browse.html">Browse</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+        <div class="right-links">
+            <a id="loginLink" href="login.html">Log In</a>
+            <a id="signupLink" href="signup.html">Sign Up</a>
+            <a id="logoutLink" href="#" style="display:none;">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="item-container">
+        <p class="breadcrumb"><a href="browse.html">Browse</a> > Jeans > Carhartt Work Jeans</p>
+
+        <div class="item-layout">
+            <div class="image-section">
+                <div class="main-image">
+                    <img id="main-product-image" src="images/carhartt/carhartt_front.jpg" alt="Carhartt jeans front view" class="main-image-actual">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumbnail active" onclick="changeProductImage('images/carhartt/carhartt_front.jpg', this)">
+                        <img src="images/carhartt/carhartt_front.jpg" alt="Front view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt/carhartt_back.jpg', this)">
+                        <img src="images/carhartt/carhartt_back.jpg" alt="Back view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt/carhartt_side.jpg', this)">
+                        <img src="images/carhartt/carhartt_side.jpg" alt="Side view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt/carhartt_front_detailed.jpg', this)">
+                        <img src="images/carhartt/carhartt_front_detailed.jpg" alt="Front detail" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt/carhartt_back_detailed.jpg', this)">
+                        <img src="images/carhartt/carhartt_back_detailed.jpg" alt="Back detail" class="thumbnail-actual">
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h1>Carhartt Loose Fit Work Jeans</h1>
+                <p class="meta">Men's Apparel | Size: 34x34 | SKU: CH-WRK-M92</p>
+
+                <div class="price-tag">$17 <span class="retail">$55 Retail</span></div>
+
+                <div class="detail-actions">
+                    <button class="btn-primary" id="reserve-btn" onclick="toggleReservation()">Reserve Item (24 hr hold)</button>
+                    <button class="btn-secondary" id="save-btn" onclick="saveItem()">Save to List</button>
+                </div>
+
+                <div class="description-box">
+                    <h2>Description</h2>
+                    <p>
+                        Heavy-duty Carhartt carpenter jeans built for work and durability. These loose-fit jeans feature the classic Carhartt construction with functional utility pockets including a hammer loop on the right side and a large tool pocket on the right thigh. The signature tan Carhartt leather patch adorns the back waistband.
+                    </p>
+                    <p>
+                        Made from rugged medium-weight denim with reinforced stitching at stress points. The loose fit through the seat and thigh provides freedom of movement for active work, while the straight leg offers a traditional workwear silhouette. Button fly closure adds to the durable construction.
+                    </p>
+                    <p>
+                        <b>Condition:</b> Excellent - minimal wear, looks nearly new. All hardware intact, no tears or stains. Ready for work or casual wear.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Item Details</h3>
+                    <div class="info-row">
+                        <div class="info-label">Brand:</div>
+                        <div class="info-value"><strong>Carhartt</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Style:</div>
+                        <div class="info-value">Loose Fit Carpenter, Straight Leg</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Material:</div>
+                        <div class="info-value">100% Cotton Denim</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Color:</div>
+                        <div class="info-value">Medium Blue Wash</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Features:</div>
+                        <div class="info-value">Hammer Loop, Tool Pockets, Reinforced Seams</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Care:</div>
+                        <div class="info-value">Machine Wash Cold, Tumble Dry Medium</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Store Location</h3>
+                    <div class="info-row">
+                        <div class="info-label">Store:</div>
+                        <div class="info-value"><strong>Salvation Army - Downtown</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Distance:</div>
+                        <div class="info-value">4.2 miles away</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Hours:</div>
+                        <div class="info-value">Open until 7:00 PM today</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Address:</div>
+                        <div class="info-value">567 Downtown Boulevard</div>
+                    </div>
+                </div>
+
+                <div class="impact-box">
+                    <h3>Environmental Impact</h3>
+                    <p>
+                        By purchasing this pre-loved item, you are saving approximately <b>5.5 kg of waste</b> and <b>23 lbs of CO2</b> compared to buying new. Carhartt's durable construction means these jeans have many years of life ahead!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="similar-items">
+            <h2>Similar Items You Might Like</h2>
+            <div class="similar-grid">
+                <div class="similar-card" onclick="window.location.href='wranglers_relaxed_fit_item2.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Wrangler Relaxed Fit</h3>
+                    <p class="meta">Size 34x32</p>
+                    <p class="price">$16</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item3.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Levi's+505" alt="Levi's 505" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Levi's 505 Regular</h3>
+                    <p class="meta">Size 32x32</p>
+                    <p class="price">$18</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item9.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Carhartt+Jacket" alt="Carhartt Jacket" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Carhartt Duck Jacket</h3>
+                    <p class="meta">Size L</p>
+                    <p class="price">$48</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item7.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Flannel" alt="Flannel Shirt" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Buck Camp Flannel</h3>
+                    <p class="meta">Size L</p>
+                    <p class="price">$14</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+        // Track reservation state
+        let isReserved = false;
+        let expirationTime = '';
+
+        // Thumbnail image switching functionality
+        function changeProductImage(imageSrc, thumbnail) {
+            const mainImage = document.getElementById('main-product-image');
+            mainImage.src = imageSrc;
+            
+            // Remove active class from all thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+        }
+
+        // Toggle reservation functionality with hover effect
+        function toggleReservation() {
+            const btn = document.getElementById('reserve-btn');
+            
+            if (!isReserved) {
+                const now = new Date();
+                now.setHours(now.getHours() + 24);
+                expirationTime = now.toLocaleString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                btn.style.background = '#4CAF50';
+                btn.classList.add('reserved');
+                
+                isReserved = true;
+            } else {
+                btn.textContent = 'Reserve Item (24 hr hold)';
+                btn.style.background = 'black';
+                btn.classList.remove('reserved');
+                
+                isReserved = false;
+            }
+        }
+
+        // Add hover effect for reserved button
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('reserve-btn');
+            
+            btn.addEventListener('mouseenter', function() {
+                if (isReserved) {
+                    btn.textContent = 'Cancel Reservation';
+                    btn.style.background = '#dc3545';
+                }
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                if (isReserved) {
+                    btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                    btn.style.background = '#4CAF50';
+                }
+            });
+        });
+
+        // Save item functionality
+        function saveItem() {
+            const btn = document.getElementById('save-btn');
+            
+            if (btn.textContent === 'Save to List') {
+                btn.textContent = '✓ Saved';
+                btn.style.background = '#333';
+                btn.style.color = 'white';
+            } else {
+                btn.textContent = 'Save to List';
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            }
+        }
+    </script>
+</body>
+</html>

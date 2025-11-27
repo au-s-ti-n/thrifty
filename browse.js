@@ -52,8 +52,8 @@
                 show = false;
             }
 
-            // Distance filter
-            if (itemDistance > maxDistance) {
+            // Distance filter (skip if "Show All" is selected)
+            if (maxDistance !== Infinity && itemDistance > maxDistance) {
                 show = false;
             }
 
@@ -94,10 +94,10 @@
             filter.checked = false;
         });
 
-        // Reset distance to default (5 miles)
-        const defaultDistance = document.querySelector('[data-distance="5"]');
-        if (defaultDistance) {
-            defaultDistance.checked = true;
+        // Reset distance to "Show All"
+        const showAllDistance = document.querySelector('[data-distance="all"]');
+        if (showAllDistance) {
+            showAllDistance.checked = true;
         }
 
         // Clear price inputs
@@ -110,7 +110,7 @@
         });
     });
 
-    // Make item cards clickable to go to detail page
+    // Make item cards clickable - SIMPLIFIED LOGIC
     itemCards.forEach(card => {
         card.addEventListener('click', function(e) {
             // Don't navigate if clicking on buttons
@@ -118,14 +118,10 @@
                 return;
             }
             
-            const h3 = this.querySelector('h3');
-            if (h3) {
-                const title = h3.textContent.trim();
-                if (title.includes("Lee")) {
-                    window.location.href = 'lee_regular_fit_item1.html';
-                } else if (title.includes("Wrangler")) {
-                    window.location.href = 'wranglers_relaxed_fit_item2.html';
-                }
+            // Get the "View Details" button and click it
+            const viewDetailsBtn = this.querySelector('.btn-primary');
+            if (viewDetailsBtn) {
+                viewDetailsBtn.click();
             }
         });
     });

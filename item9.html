@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carhartt Duck Utility Jacket</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="left-group">
+            <button class="menu-btn" id="menu-btn">☰</button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="index.html" class="logo">THRIFTY</a>
+                <a href="browse.html">Browse</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="profile.html">Profile</a>
+            </div>
+        </div>
+        <div class="right-links">
+            <a id="loginLink" href="login.html">Log In</a>
+            <a id="signupLink" href="signup.html">Sign Up</a>
+            <a id="logoutLink" href="#" style="display:none;">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="item-container">
+        <p class="breadcrumb"><a href="browse.html">Browse</a> > Outerwear > Carhartt Duck Utility Jacket</p>
+
+        <div class="item-layout">
+            <div class="image-section">
+                <div class="main-image">
+                    <img id="main-product-image" src="images/carhartt_jacket/carhartt_jacket_front.jpg" alt="Carhartt jacket front" class="main-image-actual">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumbnail active" onclick="changeProductImage('images/carhartt_jacket/carhartt_jacket_front.jpg', this)">
+                        <img src="images/carhartt_jacket/carhartt_jacket_front.jpg" alt="Front view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt_jacket/carhartt_jacket_back.jpg', this)">
+                        <img src="images/carhartt_jacket/carhartt_jacket_back.jpg" alt="Back view" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt_jacket/carhartt_jacket_logo.jpg', this)">
+                        <img src="images/carhartt_jacket/carhartt_jacket_logo.jpg" alt="Logo detail" class="thumbnail-actual">
+                    </div>
+                    <div class="thumbnail" onclick="changeProductImage('images/carhartt_jacket/carhartt_jacket_open.jpg', this)">
+                        <img src="images/carhartt_jacket/carhartt_jacket_open.jpg" alt="Interior view" class="thumbnail-actual">
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h1>Carhartt Sherpa-Lined Duck Utility Jacket</h1>
+                <p class="meta">Men's Apparel | Size: L | SKU: CH-DCK-M85</p>
+
+                <div class="price-tag">$48 <span class="retail">$120 Retail</span></div>
+
+                <div class="detail-actions">
+                    <button class="btn-primary" id="reserve-btn" onclick="toggleReservation()">Reserve Item (24 hr hold)</button>
+                    <button class="btn-secondary" id="save-btn" onclick="saveItem()">Save to List</button>
+                </div>
+
+                <div class="description-box">
+                    <h2>Description</h2>
+                    <p>
+                        Classic Carhartt work jacket crafted from heavyweight 12-ounce cotton duck canvas in a versatile moss/olive green color. This rugged utility jacket features a cozy sherpa lining throughout the body and sleeves for exceptional warmth during cold weather. The timeless design has been a workwear staple for generations.
+                    </p>
+                    <p>
+                        Built Carhartt-tough with triple-stitched main seams for durability. Features include a full-zip front with snap-button storm flap, two large hand-warmer pockets, interior chest pocket, and adjustable snap cuffs. The relaxed fit allows for easy layering over work clothes. Signature Carhartt square logo patch on the chest.
+                    </p>
+                    <p>
+                        <b>Condition:</b> Excellent - minimal signs of wear. Canvas exterior shows light use consistent with quality workwear. Sherpa lining is plush and warm. All zippers and snaps function perfectly. Clean and ready for work or casual wear.
+                    </p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Item Details</h3>
+                    <div class="info-row">
+                        <div class="info-label">Brand:</div>
+                        <div class="info-value"><strong>Carhartt</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Style:</div>
+                        <div class="info-value">Sherpa-Lined Duck Utility Jacket</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Material:</div>
+                        <div class="info-value">12 oz Cotton Duck Canvas, Sherpa Lining</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Color:</div>
+                        <div class="info-value">Moss/Olive Green</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Features:</div>
+                        <div class="info-value">Full Zip, Snap Flap, Multiple Pockets, Adjustable Cuffs</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Care:</div>
+                        <div class="info-value">Machine Wash Cold, Tumble Dry Low</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Store Location</h3>
+                    <div class="info-row">
+                        <div class="info-label">Store:</div>
+                        <div class="info-value"><strong>Goodwill - Benton Street</strong></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Distance:</div>
+                        <div class="info-value">2.3 miles away</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Hours:</div>
+                        <div class="info-value">Open until 8:00 PM today</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Address:</div>
+                        <div class="info-value">1245 Benton Street</div>
+                    </div>
+                </div>
+
+                <div class="impact-box">
+                    <h3>Environmental Impact</h3>
+                    <p>
+                        By purchasing this pre-loved item, you are saving approximately <b>7 kg of waste</b> and <b>28 lbs of CO2</b> compared to buying new. Carhartt jackets are legendary for lasting decades - this one has plenty of life left!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="similar-items">
+            <h2>Similar Items You Might Like</h2>
+            <div class="similar-grid">
+                <div class="similar-card" onclick="window.location.href='item8.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=North+Face" alt="North Face Jacket" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>North Face Thermoball</h3>
+                    <p class="meta">Size M</p>
+                    <p class="price">$58</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item4.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Carhartt+Jeans" alt="Carhartt Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Carhartt Work Jeans</h3>
+                    <p class="meta">Size 34x34</p>
+                    <p class="price">$17</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item7.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Flannel" alt="Flannel Shirt" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Buck Camp Flannel</h3>
+                    <p class="meta">Size L</p>
+                    <p class="price">$14</p>
+                </div>
+                <div class="similar-card" onclick="window.location.href='item6.html'" style="cursor: pointer;">
+                    <div class="similar-image">
+                        <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Patagonia" alt="Patagonia Fleece" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <h3>Patagonia Fleece Pullover</h3>
+                    <p class="meta">Size L</p>
+                    <p class="price">$38</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+        // Track reservation state
+        let isReserved = false;
+        let expirationTime = '';
+
+        // Thumbnail image switching functionality
+        function changeProductImage(imageSrc, thumbnail) {
+            const mainImage = document.getElementById('main-product-image');
+            mainImage.src = imageSrc;
+            
+            // Remove active class from all thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to clicked thumbnail
+            thumbnail.classList.add('active');
+        }
+
+        // Toggle reservation functionality with hover effect
+        function toggleReservation() {
+            const btn = document.getElementById('reserve-btn');
+            
+            if (!isReserved) {
+                const now = new Date();
+                now.setHours(now.getHours() + 24);
+                expirationTime = now.toLocaleString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                btn.style.background = '#4CAF50';
+                btn.classList.add('reserved');
+                
+                isReserved = true;
+            } else {
+                btn.textContent = 'Reserve Item (24 hr hold)';
+                btn.style.background = 'black';
+                btn.classList.remove('reserved');
+                
+                isReserved = false;
+            }
+        }
+
+        // Add hover effect for reserved button
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('reserve-btn');
+            
+            btn.addEventListener('mouseenter', function() {
+                if (isReserved) {
+                    btn.textContent = 'Cancel Reservation';
+                    btn.style.background = '#dc3545';
+                }
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                if (isReserved) {
+                    btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                    btn.style.background = '#4CAF50';
+                }
+            });
+        });
+
+        // Save item functionality
+        function saveItem() {
+            const btn = document.getElementById('save-btn');
+            
+            if (btn.textContent === 'Save to List') {
+                btn.textContent = '✓ Saved';
+                btn.style.background = '#333';
+                btn.style.color = 'white';
+            } else {
+                btn.textContent = 'Save to List';
+                btn.style.background = 'white';
+                btn.style.color = 'black';
+            }
+        }
+    </script>
+</body>
+</html>

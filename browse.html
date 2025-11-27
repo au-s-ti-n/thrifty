@@ -34,32 +34,38 @@
             <div class="filter-group">
                 <h4>Category</h4>
                 <label class="filter-option">
-                    <input type="checkbox" id="filter-jeans" data-category="jeans" checked> Jeans (24)
+                    <input type="checkbox" id="filter-jeans" data-category="jeans"> Jeans (4)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox" id="filter-shirts" data-category="shirts"> Shirts (12)
+                    <input type="checkbox" id="filter-shirts" data-category="shirts"> Shirts (3)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox" id="filter-shoes" data-category="shoes"> Shoes (8)
+                    <input type="checkbox" id="filter-outerwear" data-category="outerwear"> Outerwear (2)
                 </label>
                 <label class="filter-option">
-                    <input type="checkbox" id="filter-accessories" data-category="accessories"> Accessories (5)
+                    <input type="checkbox" id="filter-shoes" data-category="shoes"> Shoes (1)
                 </label>
             </div>
 
             <div class="filter-group">
                 <h4>Size</h4>
                 <label class="filter-option">
-                    <input type="checkbox" id="filter-32x30" data-size="32x30"> 32x30
+                    <input type="checkbox" id="filter-32x32" data-size="32x32"> 32x32
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" id="filter-34x32" data-size="34x32"> 34x32
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" id="filter-34x34" data-size="34x34"> 34x34
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" id="filter-m" data-size="M"> M
                 </label>
                 <label class="filter-option">
                     <input type="checkbox" id="filter-l" data-size="L"> L
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" id="filter-10" data-size="10"> 10 (Shoes)
                 </label>
             </div>
 
@@ -74,10 +80,16 @@
             <div class="filter-group">
                 <h4>Distance</h4>
                 <label class="filter-option">
+                    <input type="radio" name="distance" value="Infinity" data-distance="all" checked> Show All
+                </label>
+                <label class="filter-option">
                     <input type="radio" name="distance" value="2" data-distance="2"> < 2 miles
                 </label>
                 <label class="filter-option">
-                    <input type="radio" name="distance" value="5" data-distance="5" checked> < 5 miles
+                    <input type="radio" name="distance" value="3" data-distance="3"> < 3 miles
+                </label>
+                <label class="filter-option">
+                    <input type="radio" name="distance" value="5" data-distance="5"> < 5 miles
                 </label>
                 <label class="filter-option">
                     <input type="radio" name="distance" value="10" data-distance="10"> < 10 miles
@@ -88,16 +100,21 @@
         </aside>
 
         <main class="main-content">
-            <div class="item-card" data-category="jeans" data-size="32x30" data-price="18" data-distance="2.3">
+            <div class="search-bar-container" style="margin-bottom: 20px;">
+                <input type="text" id="search-input" placeholder="Search items by name, brand, or description..." style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px;">
+            </div>
+
+            <!-- Item 1: Lee Regular Fit Jeans -->
+            <div class="item-card" data-category="jeans" data-size="34x32" data-price="14" data-distance="2.3" data-name="Lee Regular Fit Jeans" data-brand="Lee" data-description="Classic Lee jeans in medium wash. Comfortable regular fit with straight leg opening.">
                 <div class="item-image">
                     <img src="images/lee/lee_front.jpg" alt="Lee Regular Fit Jeans" class="item-image-actual">
                 </div>
                 <div class="item-details">
                     <h3>Lee Regular Fit Jeans</h3>
-                    <p class="item-meta">Size: 32x30 | Brand: Lee</p>
+                    <p class="item-meta">Size: 34x32 | Brand: Lee</p>
                     <div class="item-price">$14 <span class="retail">$50 Retail</span></div>
                     <div class="item-description">
-                        Classic Regular Fit Jeans. Very good condition, and gently used with minimal signs of wear.
+                        Classic Lee jeans in medium wash. Comfortable regular fit with straight leg opening.
                     </div>
                     <div class="item-store">
                         <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
@@ -110,16 +127,17 @@
                 </div>
             </div>
 
-            <div class="item-card" data-category="jeans" data-size="34x32" data-price="16" data-distance="2.3">
+            <!-- Item 2: Wrangler Relaxed Fit Jeans -->
+            <div class="item-card" data-category="jeans" data-size="34x32" data-price="16" data-distance="2.3" data-name="Wrangler Relaxed Fit Jeans" data-brand="Wrangler" data-description="Relaxed fit jeans with signature W stitching. Medium-light wash with natural fading.">
                 <div class="item-image">
-                    <img src="images/wranglers/wranglers_main_image.jpg" alt="wranglers jeans front view" class="item-image-actual">
+                    <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler jeans" class="item-image-actual">
                 </div>
                 <div class="item-details">
                     <h3>Wrangler Relaxed Fit Jeans</h3>
                     <p class="item-meta">Size: 34x32 | Brand: Wrangler</p>
-                    <div class="item-price">$16</div>
+                    <div class="item-price">$16 <span class="retail">$65 Retail</span></div>
                     <div class="item-description">
-                        Regular fit jeans with straight leg. Good condition with normal wear.
+                        Relaxed fit jeans with signature W stitching. Medium-light wash with natural fading.
                     </div>
                     <div class="item-store">
                         <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
@@ -132,45 +150,185 @@
                 </div>
             </div>
 
-            <div class="item-card" data-category="shirts" data-size="M" data-price="12" data-distance="4.5">
+            <!-- Item 3: Levi's 505 Jeans -->
+            <div class="item-card" data-category="jeans" data-size="32x32" data-price="18" data-distance="3.5" data-name="Levi's 505 Regular Fit Jeans" data-brand="Levi's" data-description="Iconic Levi's 505 with classic straight leg. Medium-dark wash with signature details.">
                 <div class="item-image">
-                    <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Vintage+Tee" alt="Vintage Band T-Shirt" class="item-image-actual">
+                    <img src="images/levis/levi505_front.jpg" alt="Levi's 505" class="item-image-actual">
                 </div>
                 <div class="item-details">
-                    <h3>Vintage Band T-Shirt</h3>
-                    <p class="item-meta">Size: M | Brand: Vintage</p>
-                    <div class="item-price">$12 <span class="retail">$35 Retail</span></div>
+                    <h3>Levi's 505 Regular Fit Jeans</h3>
+                    <p class="item-meta">Size: 32x32 | Brand: Levi's</p>
+                    <div class="item-price">$18 <span class="retail">$70 Retail</span></div>
                     <div class="item-description">
-                        Classic concert tee from the 90s. Soft, worn-in feel with authentic vintage graphics.
+                        Iconic Levi's 505 with classic straight leg. Medium-dark wash with signature details.
                     </div>
                     <div class="item-store">
-                        <strong>Thrifty Village</strong> - 4.5 miles away<br>
-                        <span style="color: #666; font-size: 13px;">Open until 6pm today</span>
+                        <strong>Thrifty Village</strong> - 3.5 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='browse.html'">View Details</button>
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item3.html'">View Details</button>
                         <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
                     </div>
                 </div>
             </div>
 
-            <div class="item-card" data-category="shoes" data-size="L" data-price="25" data-distance="6.8">
+            <!-- Item 4: Carhartt Work Jeans -->
+            <div class="item-card" data-category="jeans" data-size="34x34" data-price="17" data-distance="4.2" data-name="Carhartt Work Jeans" data-brand="Carhartt" data-description="Heavy-duty carpenter jeans with tool pockets. Loose fit for workwear durability.">
                 <div class="item-image">
-                    <img src="https://via.placeholder.com/180x180/e0e0e0/666666?text=Nike+Shoes" alt="Nike Running Shoes" class="item-image-actual">
+                    <img src="images/carhartt/carhartt_front.jpg" alt="Carhartt Work Jeans" class="item-image-actual">
                 </div>
                 <div class="item-details">
-                    <h3>Nike Running Shoes</h3>
-                    <p class="item-meta">Size: 10 | Brand: Nike</p>
-                    <div class="item-price">$25 <span class="retail">$90 Retail</span></div>
+                    <h3>Carhartt Work Jeans</h3>
+                    <p class="item-meta">Size: 34x34 | Brand: Carhartt</p>
+                    <div class="item-price">$17</div>
                     <div class="item-description">
-                        Gently used Nike running shoes in excellent condition. Minor wear on soles.
+                        Heavy-duty carpenter jeans with tool pockets. Loose fit for workwear durability.
                     </div>
                     <div class="item-store">
-                        <strong>Salvation Army - Downtown</strong> - 6.8 miles away<br>
+                        <strong>Salvation Army - Downtown</strong> - 4.2 miles away<br>
                         <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
                     </div>
                     <div class="item-actions">
-                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='browse.html'">View Details</button>
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item4.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5: The Clash Band Tee -->
+            <div class="item-card" data-category="shirts" data-size="L" data-price="18" data-distance="3.5" data-name="The Clash Band T-Shirt" data-brand="Vintage" data-description="Vintage concert tee featuring The Clash with bold black text graphics on white.">
+                <div class="item-image">
+                    <img src="images/bandtee/bandtee_front.jpg" alt="The Clash Tee" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>The Clash Band T-Shirt</h3>
+                    <p class="item-meta">Size: L | Brand: Vintage</p>
+                    <div class="item-price">$18 <span class="retail">$35 Retail</span></div>
+                    <div class="item-description">
+                        Vintage concert tee featuring The Clash with bold black text graphics on white.
+                    </div>
+                    <div class="item-store">
+                        <strong>Thrifty Village</strong> - 3.5 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item5.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 6: Patagonia Fleece -->
+            <div class="item-card" data-category="shirts" data-size="L" data-price="38" data-distance="2.3" data-name="Patagonia Fleece Pullover" data-brand="Patagonia" data-description="Premium quarter-zip fleece in navy blue. Soft, warm, perfect for layering.">
+                <div class="item-image">
+                    <img src="images/patagonia/patagonia_front.jpg" alt="Patagonia Fleece" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Patagonia Better Fleece Pullover</h3>
+                    <p class="item-meta">Size: L | Brand: Patagonia</p>
+                    <div class="item-price">$38 <span class="retail">$99 Retail</span></div>
+                    <div class="item-description">
+                        Premium quarter-zip fleece in navy blue. Soft, warm, perfect for layering.
+                    </div>
+                    <div class="item-store">
+                        <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item6.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 7: Buck Camp Flannel -->
+            <div class="item-card" data-category="shirts" data-size="L" data-price="14" data-distance="4.2" data-name="Buck Camp Flannel Shirt" data-brand="Legendary Whitetails" data-description="Classic outdoor flannel in orange/tan plaid. Warm, durable heavyweight cotton.">
+                <div class="item-image">
+                    <img src="images/legendarywhitetails/flannel_front.jpg" alt="Flannel Shirt" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Buck Camp Flannel Shirt</h3>
+                    <p class="item-meta">Size: L | Brand: Legendary Whitetails</p>
+                    <div class="item-price">$14 <span class="retail">$45 Retail</span></div>
+                    <div class="item-description">
+                        Classic outdoor flannel in orange/tan plaid. Warm, durable heavyweight cotton.
+                    </div>
+                    <div class="item-store">
+                        <strong>Salvation Army - Downtown</strong> - 4.2 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item7.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 8: North Face Thermoball -->
+            <div class="item-card" data-category="outerwear" data-size="M" data-price="58" data-distance="3.5" data-name="North Face Thermoball Puffer Jacket" data-brand="The North Face" data-description="Quilted puffer with Thermoball insulation. Lightweight, warm, packable black jacket.">
+                <div class="item-image">
+                    <img src="images/northface/northface_front.jpg" alt="North Face Jacket" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>North Face Thermoball Puffer</h3>
+                    <p class="item-meta">Size: M | Brand: The North Face</p>
+                    <div class="item-price">$58 <span class="retail">$199 Retail</span></div>
+                    <div class="item-description">
+                        Quilted puffer with Thermoball insulation. Lightweight, warm, packable black jacket.
+                    </div>
+                    <div class="item-store">
+                        <strong>Thrifty Village</strong> - 3.5 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 7pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item8.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 9: Carhartt Duck Jacket -->
+            <div class="item-card" data-category="outerwear" data-size="L" data-price="48" data-distance="2.3" data-name="Carhartt Duck Jacket" data-brand="Carhartt" data-description="Sherpa-lined canvas work jacket in moss green. Heavyweight, durable, warm.">
+                <div class="item-image">
+                    <img src="images/carhartt_jacket/carhartt_jacket_front.jpg" alt="Carhartt Jacket" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Carhartt Duck Utility Jacket</h3>
+                    <p class="item-meta">Size: L | Brand: Carhartt</p>
+                    <div class="item-price">$48 <span class="retail">$120 Retail</span></div>
+                    <div class="item-description">
+                        Sherpa-lined canvas work jacket in moss green. Heavyweight, durable, warm.
+                    </div>
+                    <div class="item-store">
+                        <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item9.html'">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 10: Nike Flywire Shoes -->
+            <div class="item-card" data-category="shoes" data-size="10" data-price="24" data-distance="5.8" data-name="Nike Flywire Running Shoes" data-brand="Nike" data-description="Flywire technology running shoes in vibrant red/orange. Breathable, cushioned.">
+                <div class="item-image">
+                    <img src="images/nike/nike_side.jpg" alt="Nike Shoes" class="item-image-actual">
+                </div>
+                <div class="item-details">
+                    <h3>Nike Flywire Running Shoes</h3>
+                    <p class="item-meta">Size: 10 | Brand: Nike</p>
+                    <div class="item-price">$24 <span class="retail">$85 Retail</span></div>
+                    <div class="item-description">
+                        Flywire technology running shoes in vibrant red/orange. Breathable, cushioned.
+                    </div>
+                    <div class="item-store">
+                        <strong>Play It Again Sports</strong> - 5.8 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 6pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); window.location.href='item10.html'">View Details</button>
                         <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this)">Save</button>
                     </div>
                 </div>
@@ -199,7 +357,7 @@
             
             <div class="impact-box">
                 <h4>Environmental Impact</h4>
-                <p>These 24 items represent 120 lbs of CO2 saved vs. buying new</p>
+                <p>These 10 items represent over 200 lbs of CO2 saved vs. buying new!</p>
             </div>
         </aside>
     </div>
@@ -219,6 +377,29 @@
                 btn.style.color = 'black';
             }
         }
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const itemCards = document.querySelectorAll('.item-card');
+            
+            itemCards.forEach(card => {
+                const name = card.dataset.name ? card.dataset.name.toLowerCase() : '';
+                const brand = card.dataset.brand ? card.dataset.brand.toLowerCase() : '';
+                const description = card.dataset.description ? card.dataset.description.toLowerCase() : '';
+                
+                const matches = name.includes(searchTerm) || 
+                               brand.includes(searchTerm) || 
+                               description.includes(searchTerm);
+                
+                if (matches || searchTerm === '') {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
     </script>
 </body>
 </html>

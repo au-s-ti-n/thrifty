@@ -35,20 +35,20 @@
                     <img id="main-product-image" src="images/lee/lee_front.jpg" alt="Lee jeans front view" class="main-image-actual">
                 </div>
                 <div class="thumbnails">
-                    <div class="thumbnail active" onclick="changeLeeImage('images/lee/lee_front.jpg', this)">
-                        <img src="images/lee/lee_front.jpg" alt="Lee's Jeans front view" class="thumbnail-actual">
+                    <div class="thumbnail active" onclick="changeImage('images/lee/lee_front.jpg', this)">
+                        <img src="images/lee/lee_front.jpg" alt="Front view" class="thumbnail-actual">
                     </div>
-                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_back.jpg', this)">
-                        <img src="images/lee/lee_back.jpg" alt="Lee's Jeans back view" class="thumbnail-actual">
+                    <div class="thumbnail" onclick="changeImage('images/lee/lee_back.jpg', this)">
+                        <img src="images/lee/lee_back.jpg" alt="Back view" class="thumbnail-actual">
                     </div>
-                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_side.jpg', this)">
-                        <img src="images/lee/lee_side.jpg" alt="Lee's Jeans side view" class="thumbnail-actual">
+                    <div class="thumbnail" onclick="changeImage('images/lee/lee_side.jpg', this)">
+                        <img src="images/lee/lee_side.jpg" alt="Side view" class="thumbnail-actual">
                     </div>
-                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_zoomed_front.jpg', this)">
-                        <img src="images/lee/lee_zoomed_front.jpg" alt="Lee's Jeans front zoomed view" class="thumbnail-actual">
+                    <div class="thumbnail" onclick="changeImage('images/lee/lee_zoomed_front.jpg', this)">
+                        <img src="images/lee/lee_zoomed_front.jpg" alt="Detail view" class="thumbnail-actual">
                     </div>
-                    <div class="thumbnail" onclick="changeLeeImage('images/lee/lee_zoomed_back.jpg', this)">
-                        <img src="images/lee/lee_zoomed_back.jpg" alt="Lee's Jeans back zoomed view" class="thumbnail-actual">
+                    <div class="thumbnail" onclick="changeImage('images/lee/lee_zoomed_back.jpg', this)">
+                        <img src="images/lee/lee_zoomed_back.jpg" alt="Detail view" class="thumbnail-actual">
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <div class="price-tag">$14 <span class="retail">$50 Retail</span></div>
 
                 <div class="detail-actions">
-                    <button class="btn-primary" id="reserve-btn" onclick="reserveItem()">Reserve Item (24 hr hold)</button>
+                    <button class="btn-primary" id="reserve-btn" onclick="toggleReservation()">Reserve Item (24 hr hold)</button>
                     <button class="btn-secondary" id="save-btn" onclick="saveItem()">Save to List</button>
                 </div>
 
@@ -139,7 +139,7 @@
             <div class="similar-grid">
                 <div class="similar-card" onclick="window.location.href='wranglers_relaxed_fit_item2.html'" style="cursor: pointer;">
                     <div class="similar-image">
-                        <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler Jeans" style="width: 80%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler Jeans" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                     </div>
                     <h3>Wrangler Relaxed Fit</h3>
                     <p class="meta">Size 34x32</p>
@@ -175,8 +175,12 @@
 
     <script src="nav.js"></script>
     <script>
-        // Thumbnail image switching functionality (logic is identical to Wrangler page)
-        function changeLeeImage(imageSrc, thumbnail) {
+        // Track reservation state
+        let isReserved = false;
+        let expirationTime = '';
+
+        // Thumbnail image switching functionality
+        function changeImage(imageSrc, thumbnail) {
             const mainImage = document.getElementById('main-product-image');
             mainImage.src = imageSrc;
             
@@ -188,38 +192,55 @@
             thumbnail.classList.add('active');
         }
 
-        // Reserve item functionality
-        function reserveItem() {
+        // Toggle reservation functionality with hover effect
+        function toggleReservation() {
             const btn = document.getElementById('reserve-btn');
-            const originalText = btn.textContent;
             
-            // Change button state
-            btn.textContent = 'Reserved!';
-            btn.style.background = '#4CAF50';
-            btn.disabled = true;
+            if (!isReserved) {
+                // RESERVE the item
+                const now = new Date();
+                now.setHours(now.getHours() + 24);
+                expirationTime = now.toLocaleString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                btn.style.background = '#4CAF50';
+                btn.classList.add('reserved');
+                
+                isReserved = true;
+            } else {
+                // CANCEL reservation
+                btn.textContent = 'Reserve Item (24 hr hold)';
+                btn.style.background = 'black';
+                btn.classList.remove('reserved');
+                
+                isReserved = false;
+            }
+        }
+
+        // Add hover effect for reserved button
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('reserve-btn');
             
-            // Show expiration time
-            const now = new Date();
-            now.setHours(now.getHours() + 24);
-            const expirationTime = now.toLocaleString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                hour: 'numeric', 
-                minute: '2-digit',
-                hour12: true 
+            btn.addEventListener('mouseenter', function() {
+                if (isReserved) {
+                    btn.textContent = 'Cancel Reservation';
+                    btn.style.background = '#dc3545';
+                }
             });
             
-            // Add reservation notice
-            const detailActions = document.querySelector('.detail-actions');
-            const notice = document.createElement('p');
-            notice.style.marginTop = '15px';
-            notice.style.padding = '12px';
-            notice.style.background = '#e8f5e9';
-            notice.style.borderRadius = '8px';
-            notice.style.fontSize = '14px';
-            notice.innerHTML = `<strong>✓ Item Reserved!</strong><br>Hold expires: ${expirationTime}`;
-            detailActions.appendChild(notice);
-        }
+            btn.addEventListener('mouseleave', function() {
+                if (isReserved) {
+                    btn.textContent = `✓ Reserved (expires ${expirationTime})`;
+                    btn.style.background = '#4CAF50';
+                }
+            });
+        });
 
         // Save item functionality
         function saveItem() {
