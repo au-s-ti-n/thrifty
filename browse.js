@@ -1,7 +1,12 @@
-// browse.js - Enhanced filtering and search functionality
+// browse.js - Fully integrated with manager listings and saved items
 
 (function() {
-    const itemCards = document.querySelectorAll('.item-card');
+    // Wait for DataManager to be available
+    if (typeof DataManager === 'undefined') {
+        console.error('DataManager not loaded! Make sure dataManager.js is included first.');
+        return;
+    }
+
     const categoryFilters = document.querySelectorAll('[data-category]');
     const sizeFilters = document.querySelectorAll('[data-size]');
     const distanceFilters = document.querySelectorAll('[data-distance]');
@@ -10,15 +15,91 @@
     const clearFiltersBtn = document.getElementById('clear-filters');
     const searchInput = document.getElementById('search-input');
 
+    // Add manager listings to browse page
+    addManagerListingsToBrowse();
+
     // Check if user came from homepage with search term
     const savedSearchTerm = sessionStorage.getItem('searchTerm');
-    if (savedSearchTerm) {
+    if (savedSearchTerm && searchInput) {
         searchInput.value = savedSearchTerm;
-        sessionStorage.removeItem('searchTerm'); // Clear it after use
-        applyFilters(); // Apply the search immediately
+        sessionStorage.removeItem('searchTerm');
+        applyFilters();
+    }
+
+    // Initialize saved button states
+    updateAllSaveButtons();
+
+    function addManagerListingsToBrowse() {
+        const managerListings = DataManager.getManagerListings();
+        if (managerListings.length === 0) return;
+
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+
+        // Add manager listings as item cards
+        managerListings.forEach(listing => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+            card.dataset.category = listing.category;
+            card.dataset.size = listing.size;
+            card.dataset.price = listing.price;
+            card.dataset.distance = '2.3'; // Default
+            card.dataset.name = listing.name;
+            card.dataset.brand = listing.brand;
+            card.dataset.description = listing.description;
+            
+            card.innerHTML = `
+                <div class="item-image">
+                    <div style="width: 100%; height: 180px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                        ${listing.name}
+                    </div>
+                </div>
+                <div class="item-details">
+                    <h3>${listing.name}</h3>
+                    <p class="item-meta">Size: ${listing.size} | Brand: ${listing.brand}</p>
+                    <div class="item-price">$${listing.price}</div>
+                    <div class="item-description">
+                        ${listing.description}
+                    </div>
+                    <div class="item-store">
+                        <strong>Goodwill - Benton Street</strong> - 2.3 miles away<br>
+                        <span style="color: #666; font-size: 13px;">Open until 8pm today</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-primary" onclick="DataManager.showFeedback('Detail page coming soon for new listings', 'info')">View Details</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this, '${listing.name.replace(/'/g, "\\'")}')">Save</button>
+                    </div>
+                </div>
+            `;
+            
+            // Insert at the top (most recent first)
+            const firstCard = mainContent.querySelector('.item-card');
+            if (firstCard) {
+                mainContent.insertBefore(card, firstCard);
+            } else {
+                mainContent.appendChild(card);
+            }
+        });
+    }
+
+    function updateAllSaveButtons() {
+        const saveButtons = document.querySelectorAll('.save-btn');
+        saveButtons.forEach(btn => {
+            const card = btn.closest('.item-card');
+            if (!card) return;
+            
+            const itemName = card.dataset.name || card.querySelector('h3')?.textContent;
+            if (itemName && DataManager.isItemSaved(itemName)) {
+                btn.textContent = '✓ Saved';
+                btn.style.background = '#333';
+                btn.style.color = 'white';
+            }
+        });
     }
 
     function applyFilters() {
+        const itemCards = document.querySelectorAll('.item-card');
+        
         // Get selected categories
         const selectedCategories = Array.from(categoryFilters)
             .filter(input => input.checked)
@@ -34,11 +115,11 @@
         const maxDistance = selectedDistance ? parseFloat(selectedDistance.value) : Infinity;
 
         // Get price range
-        const minPrice = priceMinInput.value ? parseFloat(priceMinInput.value) : 0;
-        const maxPrice = priceMaxInput.value ? parseFloat(priceMaxInput.value) : Infinity;
+        const minPrice = priceMinInput ? (priceMinInput.value ? parseFloat(priceMinInput.value) : 0) : 0;
+        const maxPrice = priceMaxInput ? (priceMaxInput.value ? parseFloat(priceMaxInput.value) : Infinity) : Infinity;
 
         // Get search term
-        const searchTerm = searchInput.value.toLowerCase().trim();
+        const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
         // Filter each item card
         let visibleCount = 0;
@@ -53,12 +134,12 @@
 
             let show = true;
 
-            // Category filter (if any categories are selected)
+            // Category filter
             if (selectedCategories.length > 0 && !selectedCategories.includes(itemCategory)) {
                 show = false;
             }
 
-            // Size filter (if any sizes are selected)
+            // Size filter
             if (selectedSizes.length > 0 && !selectedSizes.includes(itemSize)) {
                 show = false;
             }
@@ -92,19 +173,18 @@
             }
         });
 
-        // Show no results message if needed
         updateResultsCount(visibleCount);
     }
 
     function updateResultsCount(count) {
-        // Remove existing results message if it exists
         const existingMessage = document.querySelector('.results-message');
         if (existingMessage) {
             existingMessage.remove();
         }
 
-        // Add new results message
         const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+        
         const message = document.createElement('div');
         message.className = 'results-message';
         message.style.marginBottom = '20px';
@@ -121,71 +201,66 @@
             message.style.background = '#d4edda';
         }
         
-        mainContent.insertBefore(message, mainContent.querySelector('.item-card'));
+        const firstElement = mainContent.querySelector('.item-card') || mainContent.firstElementChild;
+        if (firstElement) {
+            mainContent.insertBefore(message, firstElement);
+        } else {
+            mainContent.appendChild(message);
+        }
     }
 
     // Add event listeners to all filters
-    categoryFilters.forEach(filter => {
-        filter.addEventListener('change', applyFilters);
-    });
+    if (categoryFilters.length > 0) {
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('change', applyFilters);
+        });
+    }
 
-    sizeFilters.forEach(filter => {
-        filter.addEventListener('change', applyFilters);
-    });
+    if (sizeFilters.length > 0) {
+        sizeFilters.forEach(filter => {
+            filter.addEventListener('change', applyFilters);
+        });
+    }
 
-    distanceFilters.forEach(filter => {
-        filter.addEventListener('change', applyFilters);
-    });
+    if (distanceFilters.length > 0) {
+        distanceFilters.forEach(filter => {
+            filter.addEventListener('change', applyFilters);
+        });
+    }
 
-    priceMinInput.addEventListener('input', applyFilters);
-    priceMaxInput.addEventListener('input', applyFilters);
-
-    // Real-time search as user types
-    searchInput.addEventListener('input', applyFilters);
+    if (priceMinInput) priceMinInput.addEventListener('input', applyFilters);
+    if (priceMaxInput) priceMaxInput.addEventListener('input', applyFilters);
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
 
     // Clear all filters
-    clearFiltersBtn.addEventListener('click', () => {
-        // Uncheck all category filters
-        categoryFilters.forEach(filter => {
-            filter.checked = false;
+    if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', () => {
+            categoryFilters.forEach(filter => filter.checked = false);
+            sizeFilters.forEach(filter => filter.checked = false);
+            
+            const showAllDistance = document.querySelector('[data-distance="all"]');
+            if (showAllDistance) showAllDistance.checked = true;
+            
+            if (priceMinInput) priceMinInput.value = '';
+            if (priceMaxInput) priceMaxInput.value = '';
+            if (searchInput) searchInput.value = '';
+
+            document.querySelectorAll('.item-card').forEach(card => {
+                card.classList.remove('hidden');
+            });
+
+            updateResultsCount(document.querySelectorAll('.item-card').length);
         });
-
-        // Uncheck all size filters
-        sizeFilters.forEach(filter => {
-            filter.checked = false;
-        });
-
-        // Reset distance to "Show All"
-        const showAllDistance = document.querySelector('[data-distance="all"]');
-        if (showAllDistance) {
-            showAllDistance.checked = true;
-        }
-
-        // Clear price inputs
-        priceMinInput.value = '';
-        priceMaxInput.value = '';
-
-        // Clear search
-        searchInput.value = '';
-
-        // Show all items
-        itemCards.forEach(card => {
-            card.classList.remove('hidden');
-        });
-
-        // Update results count
-        updateResultsCount(itemCards.length);
-    });
+    }
 
     // Make item cards clickable
+    const itemCards = document.querySelectorAll('.item-card');
     itemCards.forEach(card => {
         card.addEventListener('click', function(e) {
-            // Don't navigate if clicking on buttons or save button
             if (e.target.tagName === 'BUTTON' || e.target.classList.contains('save-btn')) {
                 return;
             }
             
-            // Get the "View Details" button and navigate to its href
             const viewDetailsBtn = this.querySelector('.btn-primary');
             if (viewDetailsBtn && viewDetailsBtn.onclick) {
                 viewDetailsBtn.click();
@@ -193,49 +268,51 @@
         });
     });
 
-    // Initial results count on page load
-    const visibleItems = Array.from(itemCards).filter(card => !card.classList.contains('hidden')).length;
+    // Initial results count
+    const visibleItems = Array.from(document.querySelectorAll('.item-card')).filter(card => !card.classList.contains('hidden')).length;
     updateResultsCount(visibleItems);
 })();
 
-// Toggle save button functionality (global function used in HTML)
-function toggleSave(btn) {
-    if (btn.textContent === 'Save') {
-        btn.textContent = '✓ Saved';
-        btn.style.background = '#333';
-        btn.style.color = 'white';
-        
-        // Optionally save to sessionStorage for persistence
-        const itemName = btn.closest('.item-card').querySelector('h3').textContent;
-        let savedItems = JSON.parse(sessionStorage.getItem('savedItems') || '[]');
-        if (!savedItems.includes(itemName)) {
-            savedItems.push(itemName);
-            sessionStorage.setItem('savedItems', JSON.stringify(savedItems));
-        }
-    } else {
-        btn.textContent = 'Save';
-        btn.style.background = 'white';
-        btn.style.color = 'black';
-        
-        // Remove from sessionStorage
-        const itemName = btn.closest('.item-card').querySelector('h3').textContent;
-        let savedItems = JSON.parse(sessionStorage.getItem('savedItems') || '[]');
-        savedItems = savedItems.filter(name => name !== itemName);
-        sessionStorage.setItem('savedItems', JSON.stringify(savedItems));
+// Toggle save button (global function)
+function toggleSave(btn, itemName) {
+    // Check if logged in
+    if (!DataManager.isLoggedIn()) {
+        const loginPanel = document.createElement('div');
+        loginPanel.className = 'confirm-panel';
+        loginPanel.innerHTML = `
+            <div class="confirm-content">
+                <h3>Login Required</h3>
+                <p>You need to be logged in to save items.</p>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn-secondary" onclick="this.closest('.confirm-panel').remove()" style="flex: 1;">Cancel</button>
+                    <button class="btn-primary" onclick="window.location.href='login.html'" style="flex: 1;">Go to Login</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(loginPanel);
+        return;
     }
-}
 
-// On page load, check if items are already saved and update UI
-document.addEventListener('DOMContentLoaded', function() {
-    const savedItems = JSON.parse(sessionStorage.getItem('savedItems') || '[]');
-    const saveButtons = document.querySelectorAll('.save-btn');
-    
-    saveButtons.forEach(btn => {
-        const itemName = btn.closest('.item-card').querySelector('h3').textContent;
-        if (savedItems.includes(itemName)) {
+    // Get item name if not provided
+    if (!itemName) {
+        const card = btn.closest('.item-card');
+        itemName = card.dataset.name || card.querySelector('h3')?.textContent;
+    }
+
+    if (!itemName) return;
+
+    if (btn.textContent === 'Save' || btn.textContent.trim() === 'Save') {
+        if (DataManager.addSavedItem(itemName)) {
             btn.textContent = '✓ Saved';
             btn.style.background = '#333';
             btn.style.color = 'white';
+            DataManager.showFeedback('Added to saved items!', 'success');
         }
-    });
-});
+    } else {
+        DataManager.removeSavedItem(itemName);
+        btn.textContent = 'Save';
+        btn.style.background = 'white';
+        btn.style.color = 'black';
+        DataManager.showFeedback('Removed from saved items.', 'info');
+    }
+}

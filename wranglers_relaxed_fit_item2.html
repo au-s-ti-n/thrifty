@@ -174,90 +174,10 @@
         </div>
     </div>
 
+    <script src="dataManager.js"></script>
     <script src="nav.js"></script>
-    <script>
-        // Track reservation state
-        let isReserved = false;
-        let expirationTime = '';
+    <script src="itemDetail.js"></script>
 
-        // Thumbnail image switching functionality for Wrangler jeans
-        function changeWranglerImage(imageSrc, thumbnail) {
-            const mainImage = document.getElementById('main-product-image');
-            mainImage.src = imageSrc;
-            
-            // Remove active class from all thumbnails
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            thumbnails.forEach(thumb => thumb.classList.remove('active'));
-            
-            // Add active class to clicked thumbnail
-            thumbnail.classList.add('active');
-        }
-
-        // Toggle reservation functionality with hover effect
-        function toggleReservation() {
-            const btn = document.getElementById('reserve-btn');
-            
-            if (!isReserved) {
-                // RESERVE the item
-                const now = new Date();
-                now.setHours(now.getHours() + 24);
-                expirationTime = now.toLocaleString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    hour: 'numeric', 
-                    minute: '2-digit',
-                    hour12: true 
-                });
-                
-                btn.textContent = `✓ Reserved (expires ${expirationTime})`;
-                btn.style.background = '#4CAF50';
-                btn.classList.add('reserved');
-                
-                isReserved = true;
-            } else {
-                // CANCEL reservation
-                btn.textContent = 'Reserve Item (24 hr hold)';
-                btn.style.background = 'black';
-                btn.classList.remove('reserved');
-                
-                isReserved = false;
-            }
-        }
-
-        // Add hover effect for reserved button
-        document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.getElementById('reserve-btn');
-            
-            btn.addEventListener('mouseenter', function() {
-                if (isReserved) {
-                    btn.textContent = 'Cancel Reservation';
-                    btn.style.background = '#dc3545';
-                }
-            });
-            
-            btn.addEventListener('mouseleave', function() {
-                if (isReserved) {
-                    btn.textContent = `✓ Reserved (expires ${expirationTime})`;
-                    btn.style.background = '#4CAF50';
-                }
-            });
-        });
-
-        // Save item functionality
-        function saveItem() {
-            const btn = document.getElementById('save-btn');
-            
-            if (btn.textContent === 'Save to List') {
-                btn.textContent = '✓ Saved';
-                btn.style.background = '#333';
-                btn.style.color = 'white';
-            } else {
-                btn.textContent = 'Save to List';
-                btn.style.background = 'white';
-                btn.style.color = 'black';
-            }
-        }
-    </script>
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">

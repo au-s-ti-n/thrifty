@@ -1,111 +1,26 @@
-// customer.js - Fully integrated customer dashboard
+// customer.js
 
-// Comprehensive item database matching all items in browse
-const itemDatabase = {
-    "Lee Regular Fit Jeans": {
-        url: "lee_regular_fit_item1.html",
-        image: "images/lee/lee_front.jpg",
-        price: "$14",
-        size: "34x32",
-        store: "Goodwill Benton",
-        co2: 18,
-        water: 1800
-    },
-    "Wrangler Relaxed Fit Jeans": {
-        url: "wranglers_relaxed_fit_item2.html",
-        image: "images/wranglers/wranglers_main_image.jpg",
-        price: "$16",
-        size: "34x32",
-        store: "Goodwill Benton",
-        co2: 22,
-        water: 1800
-    },
-    "Levi's 505 Regular Fit Jeans": {
-        url: "item3.html",
-        image: "images/levis/levi505_front.jpg",
-        price: "$18",
-        size: "32x32",
-        store: "Thrifty Village",
-        co2: 20,
-        water: 1800
-    },
-    "Carhartt Work Jeans": {
-        url: "item4.html",
-        image: "images/carhartt/carhartt_front.jpg",
-        price: "$17",
-        size: "34x34",
-        store: "Salvation Army",
-        co2: 23,
-        water: 1800
-    },
-    "The Clash Band T-Shirt": {
-        url: "item5.html",
-        image: "images/bandtee/bandtee_front.jpg",
-        price: "$18",
-        size: "L",
-        store: "Thrifty Village",
-        co2: 12,
-        water: 700
-    },
-    "Patagonia Better Fleece Pullover": {
-        url: "item6.html",
-        image: "images/patagonia/patagonia_front.jpg",
-        price: "$38",
-        size: "L",
-        store: "Goodwill Benton",
-        co2: 25,
-        water: 1200
-    },
-    "Buck Camp Flannel Shirt": {
-        url: "item7.html",
-        image: "images/legendarywhitetails/flannel_front.jpg",
-        price: "$14",
-        size: "L",
-        store: "Salvation Army",
-        co2: 15,
-        water: 900
-    },
-    "North Face Thermoball Puffer": {
-        url: "item8.html",
-        image: "images/northface/northface_front.jpg",
-        price: "$58",
-        size: "M",
-        store: "Thrifty Village",
-        co2: 45,
-        water: 2500
-    },
-    "Carhartt Duck Utility Jacket": {
-        url: "item9.html",
-        image: "images/carhartt_jacket/carhartt_jacket_front.jpg",
-        price: "$48",
-        size: "L",
-        store: "Goodwill Benton",
-        co2: 40,
-        water: 2000
-    },
-    "Nike Flywire Running Shoes": {
-        url: "item10.html",
-        image: "images/nike/nike_side.jpg",
-        price: "$24",
-        size: "10",
-        store: "Play It Again Sports",
-        co2: 30,
-        water: 1500
-    }
-};
+// Load all data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadSavedItems();
+    loadReservations();
+    loadPurchaseHistory();
+    calculateAndDisplayImpact();
+});
 
 // Load and display saved items
 function loadSavedItems() {
-    const savedItems = JSON.parse(sessionStorage.getItem('savedItems') || '[]');
+    const savedItemNames = DataManager.getSavedItems();
+    const allItems = DataManager.getAllItems();
     const container = document.getElementById('saved-items-container');
     const countElement = document.getElementById('saved-count');
     const noItemsMessage = document.getElementById('no-saved-message');
     
     if (!container) return;
     
-    countElement.textContent = savedItems.length;
+    countElement.textContent = savedItemNames.length;
 
-    if (savedItems.length === 0) {
+    if (savedItemNames.length === 0) {
         noItemsMessage.style.display = 'block';
         container.style.display = 'none';
         return;
@@ -115,22 +30,22 @@ function loadSavedItems() {
     container.style.display = 'grid';
     container.innerHTML = '';
 
-    savedItems.forEach(itemName => {
-        const itemInfo = itemDatabase[itemName];
+    savedItemNames.forEach(itemName => {
+        const itemInfo = allItems[itemName];
         if (!itemInfo) return;
 
         const card = document.createElement('div');
         card.className = 'saved-item-card';
         card.innerHTML = `
-            <div class="saved-item-image" onclick="window.location.href='${itemInfo.url}'">
+            <div class="saved-item-image" onclick="${itemInfo.url !== '#' ? `window.location.href='${itemInfo.url}'` : 'DataManager.showFeedback(\'Detail page coming soon\', \'info\')'}">
                 <img src="${itemInfo.image}" alt="${itemName}">
             </div>
             <div class="saved-item-details">
                 <h4>${itemName}</h4>
                 <p class="item-meta">${itemInfo.size} | ${itemInfo.store}</p>
-                <p class="item-price">${itemInfo.price}</p>
+                <p class="item-price">${itemInfo.priceDisplay}</p>
                 <div class="saved-item-actions">
-                    <button class="btn-primary" onclick="window.location.href='${itemInfo.url}'">View Item</button>
+                    ${itemInfo.url !== '#' ? `<button class="btn-primary" onclick="window.location.href='${itemInfo.url}'">View Item</button>` : '<button class="btn-primary" onclick="DataManager.showFeedback(\'Detail page coming soon\', \'info\')">View Item</button>'}
                     <button class="btn-secondary" onclick="removeSavedItem('${itemName.replace(/'/g, "\\'")}')">Remove</button>
                 </div>
             </div>
@@ -141,20 +56,21 @@ function loadSavedItems() {
 
 // Load active reservations
 function loadReservations() {
-    const reservations = JSON.parse(sessionStorage.getItem('reservations') || '[]');
+    const reservations = DataManager.getReservations();
+    const allItems = DataManager.getAllItems();
     const container = document.querySelector('.reservation-container');
     
-    if (!container || reservations.length === 0) {
-        if (container) {
-            container.innerHTML = '<p class="no-items-message">No active reservations. <a href="browse.html">Browse items</a> to reserve something!</p>';
-        }
-        return;
-    }
+    if (!container) return;
 
     container.innerHTML = '';
     
+    if (reservations.length === 0) {
+        container.innerHTML = '<p class="no-items-message">No active reservations. <a href="browse.html">Browse items</a> to reserve something!</p>';
+        return;
+    }
+
     reservations.forEach((reservation, index) => {
-        const itemInfo = itemDatabase[reservation.itemName];
+        const itemInfo = allItems[reservation.itemName];
         if (!itemInfo) return;
 
         const card = document.createElement('div');
@@ -166,12 +82,12 @@ function loadReservations() {
             <div class="item-details">
                 <h3>${reservation.itemName}</h3>
                 <p class="item-meta">Size: ${itemInfo.size} | Reserved ${reservation.date}</p>
-                <p class="store-info"><strong>${itemInfo.store}</strong> - ${reservation.distance}</p>
+                <p class="store-info"><strong>${reservation.store}</strong> - ${reservation.distance}</p>
                 <p class="expire-time">Hold expires: <strong>${reservation.expires}</strong></p>
                 <p class="impact-text">Saves ${itemInfo.co2} lbs CO2 when purchased</p>
                 <div class="item-actions">
-                    <button class="btn-primary" onclick="viewDirections('${itemInfo.store}')">Get Directions</button>
-                    <button class="btn-secondary" onclick="cancelReservation(${index})">Cancel Hold</button>
+                    <button class="btn-primary" onclick="viewDirections('${reservation.store}')">Get Directions</button>
+                    <button class="btn-secondary" onclick="cancelReservation('${reservation.itemName.replace(/'/g, "\\'")}')">Cancel Hold</button>
                 </div>
             </div>
         `;
@@ -185,42 +101,150 @@ function loadReservations() {
     container.appendChild(tip);
 }
 
-// Calculate total environmental impact
-function calculateImpact() {
-    const purchaseHistory = JSON.parse(sessionStorage.getItem('purchaseHistory') || '[]');
-    let totalCO2 = 0;
-    let totalWater = 0;
+// Load purchase history - ENHANCED VERSION
+function loadPurchaseHistory() {
+    const history = DataManager.getPurchaseHistory();
+    
+    // Update the Quick Actions button to show the purchase history page
+    const purchaseHistoryBtn = document.querySelector('.action-btn[onclick*="Purchase History"]');
+    if (purchaseHistoryBtn) {
+        purchaseHistoryBtn.onclick = function() { showPurchaseHistoryPage(); };
+    }
+}
 
-    purchaseHistory.forEach(itemName => {
-        const item = itemDatabase[itemName];
-        if (item) {
-            totalCO2 += item.co2;
-            totalWater += item.water;
+// NEW: Show purchase history in a detailed view
+function showPurchaseHistoryPage() {
+    const history = DataManager.getPurchaseHistory();
+    const allItems = DataManager.getAllItems();
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 900px; max-height: 85vh; overflow-y: auto;">
+            <span class="modal-close" onclick="this.closest('.modal').remove()">&times;</span>
+            <h2>Purchase History</h2>
+            <p style="color: #666; margin-bottom: 25px;">Your sustainable shopping journey</p>
+            
+            ${history.length === 0 ? `
+                <div class="no-items-message">
+                    <p>No purchase history yet. <a href="browse.html">Start shopping</a> to build your sustainable wardrobe!</p>
+                </div>
+            ` : `
+                <div class="saved-items-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                    ${history.map(purchase => {
+                        const itemInfo = allItems[purchase.itemName];
+                        if (!itemInfo) return '';
+                        
+                        return `
+                            <div class="saved-item-card">
+                                <div class="saved-item-image" style="height: 150px;">
+                                    <img src="${itemInfo.image}" alt="${purchase.itemName}">
+                                </div>
+                                <div class="saved-item-details">
+                                    <h4 style="font-size: 15px;">${purchase.itemName}</h4>
+                                    <p class="item-meta" style="font-size: 12px;">${itemInfo.size}</p>
+                                    <p class="item-price" style="font-size: 18px;">${itemInfo.priceDisplay}</p>
+                                    <p style="font-size: 12px; color: #27ae60; margin-top: 5px;">Purchased ${purchase.date}</p>
+                                    <p style="font-size: 11px; color: #666; margin-top: 5px;">Saved ${itemInfo.co2} lbs CO2</p>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: 12px;">
+                    <h3 style="margin-bottom: 10px;">Your Total Impact</h3>
+                    <p style="font-size: 15px; color: #555;">
+                        Through ${history.length} sustainable purchase${history.length !== 1 ? 's' : ''}, you've made a real difference!
+                    </p>
+                </div>
+            `}
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Close on outside click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
         }
     });
+}
 
-    // Update display if elements exist
-    const co2Element = document.querySelector('.stat-card h3');
-    if (co2Element && co2Element.textContent.includes('lbs')) {
-        co2Element.textContent = totalCO2 + ' lbs';
+// Calculate and display environmental impact
+function calculateAndDisplayImpact() {
+    const impact = DataManager.calculateTotalImpact();
+    
+    // Update the stat cards if they exist
+    const statCards = document.querySelectorAll('.stat-card');
+    if (statCards.length >= 3) {
+        // CO2 card
+        statCards[0].querySelector('h3').textContent = impact.totalCO2 + ' lbs';
+        const co2Progress = Math.min((impact.totalCO2 / 100) * 100, 100);
+        const co2Fill = statCards[0].querySelector('.progress-fill');
+        if (co2Fill) co2Fill.style.width = co2Progress + '%';
+        const co2Text = statCards[0].querySelector('.progress-text');
+        if (co2Text) co2Text.textContent = `${Math.round(co2Progress)}% to Eco Warrior badge`;
+
+        // Water card
+        statCards[1].querySelector('h3').textContent = impact.totalWater.toLocaleString() + ' gal';
+        const waterProgress = Math.min((impact.totalWater / 5000) * 100, 100);
+        const waterFill = statCards[1].querySelector('.progress-fill');
+        if (waterFill) waterFill.style.width = waterProgress + '%';
+        const waterText = statCards[1].querySelector('.progress-text');
+        if (waterText) waterText.textContent = `${Math.round(waterProgress)}% to Water Saver badge`;
+
+        // Waste card
+        statCards[2].querySelector('h3').textContent = impact.totalWaste.toFixed(1) + ' lbs';
+        const wasteProgress = Math.min((impact.totalWaste / 50) * 100, 100);
+        const wasteFill = statCards[2].querySelector('.progress-fill');
+        if (wasteFill) wasteFill.style.width = wasteProgress + '%';
+        const wasteText = statCards[2].querySelector('.progress-text');
+        if (wasteText) wasteText.textContent = `${Math.round(wasteProgress)}% to Waste Reducer badge`;
     }
+
+    // Update achievements based on impact
+    updateAchievements(impact);
+}
+
+// Update achievement status
+function updateAchievements(impact) {
+    const achievements = document.querySelectorAll('.achievement-card');
+    
+    achievements.forEach(card => {
+        const title = card.querySelector('.achievement-title').textContent;
+        
+        // Unlock achievements based on criteria
+        if (title === 'Green Shopper' && impact.totalCO2 >= 25) {
+            card.classList.add('unlocked');
+            card.classList.remove('locked');
+            card.querySelector('.badge-status').textContent = 'Unlocked!';
+        }
+        
+        if (title === 'Eco Warrior' && impact.totalCO2 >= 100) {
+            card.classList.add('unlocked');
+            card.classList.remove('locked');
+            card.querySelector('.badge-status').textContent = 'Unlocked!';
+        }
+        
+        if (title === 'Water Saver' && impact.totalWater >= 5000) {
+            card.classList.add('unlocked');
+            card.classList.remove('locked');
+            card.querySelector('.badge-status').textContent = 'Unlocked!';
+        }
+    });
 }
 
 // Remove item from saved items
 function removeSavedItem(itemName) {
-    let savedItems = JSON.parse(sessionStorage.getItem('savedItems') || '[]');
-    savedItems = savedItems.filter(name => name !== itemName);
-    sessionStorage.setItem('savedItems', JSON.stringify(savedItems));
-    
-    // Show feedback
-    showFeedback('Item removed from saved list');
-    
+    DataManager.removeSavedItem(itemName);
+    DataManager.showFeedback('Item removed from saved list', 'info');
     loadSavedItems();
 }
 
-// View directions (no alert, visual feedback)
+// View directions
 function viewDirections(storeName) {
-    // Create a temporary modal-like element for directions
     const directionsPanel = document.createElement('div');
     directionsPanel.className = 'directions-panel';
     directionsPanel.innerHTML = `
@@ -228,13 +252,12 @@ function viewDirections(storeName) {
             <button class="close-directions" onclick="this.parentElement.parentElement.remove()">×</button>
             <h3>Directions to ${storeName}</h3>
             <p>Opening in Google Maps...</p>
-            <p style="color: #666; font-size: 14px; margin-top: 15px;">In a production app, this would open your device's maps application with directions to the store.</p>
+            <p style="color: #666; font-size: 14px; margin-top: 15px;">In production, this would open your device's maps application with directions to the store.</p>
             <button class="btn-primary" onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px;">Close</button>
         </div>
     `;
     document.body.appendChild(directionsPanel);
     
-    // Auto-remove after 3 seconds
     setTimeout(() => {
         if (directionsPanel.parentElement) {
             directionsPanel.remove();
@@ -243,7 +266,7 @@ function viewDirections(storeName) {
 }
 
 // Cancel reservation
-function cancelReservation(index) {
+function cancelReservation(itemName) {
     const confirmPanel = document.createElement('div');
     confirmPanel.className = 'confirm-panel';
     confirmPanel.innerHTML = `
@@ -252,49 +275,93 @@ function cancelReservation(index) {
             <p>This item will be returned to available inventory for other shoppers.</p>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button class="btn-secondary" onclick="this.closest('.confirm-panel').remove()" style="flex: 1;">Keep Reservation</button>
-                <button class="btn-cancel" onclick="confirmCancelReservation(${index}); this.closest('.confirm-panel').remove();" style="flex: 1;">Cancel Hold</button>
+                <button class="btn-cancel" onclick="confirmCancelReservation('${itemName.replace(/'/g, "\\'")}'); this.closest('.confirm-panel').remove();" style="flex: 1;">Cancel Hold</button>
             </div>
         </div>
     `;
     document.body.appendChild(confirmPanel);
 }
 
-function confirmCancelReservation(index) {
-    let reservations = JSON.parse(sessionStorage.getItem('reservations') || '[]');
-    reservations.splice(index, 1);
-    sessionStorage.setItem('reservations', JSON.stringify(reservations));
-    
-    showFeedback('Reservation cancelled. Item returned to inventory.');
+function confirmCancelReservation(itemName) {
+    DataManager.removeReservation(itemName);
+    DataManager.showFeedback('Reservation cancelled. Item returned to inventory.', 'info');
     loadReservations();
 }
 
-// Show visual feedback (no alerts)
-function showFeedback(message) {
-    const feedback = document.createElement('div');
-    feedback.className = 'feedback-toast';
-    feedback.textContent = message;
-    document.body.appendChild(feedback);
+// NEW: Edit shopping preferences
+function editPreferences() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="modal-close" onclick="this.closest('.modal').remove()">&times;</span>
+            <h2>Edit Shopping Preferences</h2>
+            <form onsubmit="savePreferences(event)">
+                <label>Preferred Sizes (comma-separated)</label>
+                <input type="text" id="pref-sizes" value="32x30, M, 9" placeholder="e.g., 32x32, L, 10">
+                
+                <label>Favorite Stores (comma-separated)</label>
+                <input type="text" id="pref-stores" value="Goodwill Benton, Thrifty Village" placeholder="e.g., Goodwill, Salvation Army">
+                
+                <label>Interested Categories</label>
+                <div style="display: flex; flex-direction: column; gap: 8px; margin: 10px 0;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" checked> Vintage
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" checked> Outdoor Gear
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" checked> Streetwear
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox"> Designer
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox"> Workwear
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save Preferences</button>
+            </form>
+        </div>
+    `;
+    document.body.appendChild(modal);
     
-    setTimeout(() => feedback.classList.add('show'), 100);
+    // Close on outside click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+function savePreferences(event) {
+    event.preventDefault();
     
-    setTimeout(() => {
-        feedback.classList.remove('show');
-        setTimeout(() => feedback.remove(), 300);
-    }, 3000);
+    // Get values
+    const sizes = document.getElementById('pref-sizes').value;
+    const stores = document.getElementById('pref-stores').value;
+    
+    // Update display in settings box
+    const settingBox = document.querySelector('.setting-box');
+    if (settingBox) {
+        settingBox.querySelector('p:nth-of-type(1)').innerHTML = `Preferred Sizes: <strong>${sizes}</strong>`;
+        settingBox.querySelector('p:nth-of-type(2)').innerHTML = `Favorite Stores: <strong>${stores}</strong>`;
+    }
+    
+    // Close modal and show success
+    document.querySelector('.modal').remove();
+    DataManager.showFeedback('Preferences updated successfully!', 'success');
 }
 
 // Settings functionality
 function saveSettings() {
-    showFeedback('Settings saved successfully!');
+    DataManager.showFeedback('Settings saved successfully!', 'success');
 }
 
-function editPreferences() {
-    showFeedback('Preference editing feature coming in next update');
+// Show feedback (uses DataManager)
+function showFeedback(message, type) {
+    DataManager.showFeedback(message, type);
 }
-
-// Load all data on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadSavedItems();
-    loadReservations();
-    calculateImpact();
-});
