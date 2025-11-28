@@ -6,6 +6,7 @@
     <title>Log In</title>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="auth.css" />
 </head>
 
 <body>
@@ -28,19 +29,48 @@
         </div>
     </nav>
 
-    <div class="login-container">
-        <h2 class="login-title">Welcome back!</h2>
+    <div class="auth-page-wrapper">
+        <div class="login-container">
+            <h2 class="login-title">Welcome back!</h2>
 
-        <form id="loginForm">
-            <input class="login-input" type="email" id="email" placeholder="Email" required />
-            <input class="login-input" type="password" id="password" placeholder="Password" required />
+            <form id="loginForm">
+                <input class="login-input" type="email" id="email" placeholder="Email" required />
+                <input class="login-input" type="password" id="password" placeholder="Password" required />
 
-            <button type="submit" class="btn-primary">Log In</button>
-        </form>
+                <button type="submit" class="btn-primary">Log In</button>
+            </form>
 
-        <p class="login-footer">Don't have an account? <a href="signup.html">Sign Up here</a></p>
+            <p class="login-footer">Don't have an account? <a href="signup.html">Sign Up here</a></p>
+        </div>
     </div>
-
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Thrifty</h3>
+                <p>Making sustainable fashion accessible to everyone.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="browse.html">Browse Items</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>For Stores</h4>
+                <a href="signup.html">Partner With Us</a>
+                <a href="manager.html">Store Dashboard</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p>hello@thrifty.com</p>
+                <p>San Jose, CA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Thrifty. Built with sustainability in mind.</p>
+        </div>
+    </footer>
     <script src="nav.js"></script>
     <script src="auth.js"></script>
 </body>

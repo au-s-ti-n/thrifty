@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-
+    <title>My Profile - Thrifty</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="customer.css" />
 </head>
 
 <body>
@@ -29,71 +29,211 @@
     
     <div class="dashboard-container">
         <div class="dashboard-content">
-            <h1>Customer Dashboard</h1>
+            <h1>My Dashboard</h1>
+            <p class="welcome-text">Welcome back, Jane! Ready to find something unique today?</p>
             
+            <!-- Impact Summary -->
             <div class="section">
-                <h2>Welcome, Jane Doe!</h2>
+                <h2>Your Environmental Impact</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>Items Saved</h3>
-                        <p>12</p>
+                        <h3>45 lbs</h3>
+                        <p>CO2 Emissions Saved</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <p class="progress-text">45% to Eco Warrior badge</p>
                     </div>
                     <div class="stat-card">
-                        <h3>Reservations</h3>
-                        <p>1</p>
+                        <h3>3,600 gal</h3>
+                        <p>Water Conserved</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%"></div>
+                        </div>
+                        <p class="progress-text">72% to Water Saver badge</p>
                     </div>
                     <div class="stat-card">
-                        <h3>CO2 Saved</h3>
-                        <p>150 lbs</p>
+                        <h3>12 lbs</h3>
+                        <p>Waste Prevented</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 24%"></div>
+                        </div>
+                        <p class="progress-text">24% to Waste Reducer badge</p>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Current Reservations -->
             <div class="section">
-                <h2>Current Reservation</h2>
-                <div class="item-card">
-                    <h3>Vintage Levi's 501 Jeans</h3>
-                    <p>Reserved at: Goodwill - Benton Street</p>
-                    <p>Hold expires: Nov 13, 2:30 PM</p>
-                    <button class="btn-primary">Get Directions</button>
-                    <button class="btn-secondary">Cancel Reservation</button>
+                <h2>Active Reservations</h2>
+                <div class="reservation-container">
+                    <!-- Dynamically loaded by JavaScript -->
                 </div>
             </div>
-            
+
+            <!-- Saved Items -->
+            <div class="section">
+                <h2>Saved Items (<span id="saved-count">0</span>)</h2>
+                <div id="saved-items-container" class="saved-items-grid">
+                    <!-- Dynamically populated by JavaScript -->
+                </div>
+                <p id="no-saved-message" class="no-items-message" style="display: none;">
+                    You haven't saved any items yet. <a href="browse.html">Start browsing</a> to save items you love!
+                </p>
+            </div>
+
+            <!-- Achievements -->
+            <div class="section">
+                <h2>Achievements & Badges</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card unlocked">
+                        <div class="achievement-title">First Thrift</div>
+                        <p>Made your first reservation</p>
+                        <span class="badge-status">Unlocked</span>
+                    </div>
+                    <div class="achievement-card unlocked">
+                        <div class="achievement-title">Green Shopper</div>
+                        <p>Saved 25 lbs CO2</p>
+                        <span class="badge-status">Unlocked</span>
+                    </div>
+                    <div class="achievement-card locked">
+                        <div class="achievement-title">Eco Warrior</div>
+                        <p>Save 100 lbs CO2</p>
+                        <span class="badge-status">55 lbs to go</span>
+                    </div>
+                    <div class="achievement-card locked">
+                        <div class="achievement-title">Water Saver</div>
+                        <p>Conserve 5,000 gallons</p>
+                        <span class="badge-status">1,400 gal to go</span>
+                    </div>
+                    <div class="achievement-card locked">
+                        <div class="achievement-title">Monthly Thrifter</div>
+                        <p>Thrift 6 months in a row</p>
+                        <span class="badge-status">2 months down</span>
+                    </div>
+                    <div class="achievement-card locked">
+                        <div class="achievement-title">Local Explorer</div>
+                        <p>Visit 5 different stores</p>
+                        <span class="badge-status">2/5 stores</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
             <div class="section">
                 <h2>Recent Activity</h2>
-                <p>Nov 12: Reserved Levi's 501 Jeans at Goodwill Benton</p>
-                <p>Nov 10: Saved Patagonia Fleece</p>
-                <p>Nov 8: Purchased Vintage Band Tee - $8</p>
-                <p>Nov 5: Joined Thrifty!</p>
-            </div>
-            
-            <div class="section">
-                <h3>Account Settings</h3>
-                <button class="btn-primary">Edit Profile</button>
-                <button class="btn-primary">Notification Preferences</button>
-                <button class="btn-primary">Saved Searches</button>
-                <button class="btn-primary">Purchase History</button>
-            </div>
-            
-            <div class="section">
-                <h3>Preferences</h3>
-                <div class="item-card">
-                    <p>Favorite Stores: Goodwill Benton, Thrifty Village</p>
-                    <p>Sizes: 32x30, M, 9</p>
-                    <p>Interested In: Vintage, Outdoor Gear, Streetwear</p>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p><strong>Reserved</strong> Levi's 505 Jeans</p>
+                            <p class="activity-time">Today at 10:30 AM</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p><strong>Saved</strong> Patagonia Fleece</p>
+                            <p class="activity-time">Nov 26 at 3:45 PM</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p><strong>Purchased</strong> Vintage Band Tee</p>
+                            <p class="activity-time">Nov 24 at 2:15 PM</p>
+                            <p class="activity-impact">Saved 12 lbs CO2, 700 gal water</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p><strong>Earned badge:</strong> Green Shopper</p>
+                            <p class="activity-time">Nov 24 at 2:15 PM</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p><strong>Joined</strong> Thrifty</p>
+                            <p class="activity-time">Nov 5</p>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn-primary">Update</button>
             </div>
-            
+
+            <!-- Settings & Preferences -->
             <div class="section">
-                <h3>Monthly Challenge</h3>
-                <p>Thrift 5 more items this month to earn the "Eco Warrior" badge!</p>
-                <p>1 of 3 completed</p>
+                <h2>Settings & Preferences</h2>
+                <div class="settings-grid">
+                    <div class="setting-box">
+                        <h4>Shopping Preferences</h4>
+                        <p>Preferred Sizes: <strong>32x30, M, 9</strong></p>
+                        <p>Favorite Stores: <strong>Goodwill Benton, Thrifty Village</strong></p>
+                        <p>Interested In: <strong>Vintage, Outdoor Gear, Streetwear</strong></p>
+                        <button class="btn-secondary" onclick="editPreferences()">Edit Preferences</button>
+                    </div>
+                    <div class="setting-box">
+                        <h4>Notifications</h4>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> New items matching my preferences
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Reservation reminders
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> Weekly highlights email
+                        </label>
+                        <button class="btn-secondary" onclick="saveSettings()">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <button class="action-btn" onclick="window.location.href='browse.html'">
+                        <span>Browse Items</span>
+                    </button>
+                    <button class="action-btn" onclick="showFeedback('Saved searches feature coming in next update')">
+                        <span>Saved Searches</span>
+                    </button>
+                    <button class="action-btn" onclick="showFeedback('Purchase history feature coming in next update')">
+                        <span>Purchase History</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='about.html'">
+                        <span>Learn More</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Thrifty</h3>
+                <p>Making sustainable fashion accessible to everyone.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="browse.html">Browse Items</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>For Stores</h4>
+                <a href="signup.html">Partner With Us</a>
+                <a href="manager.html">Store Dashboard</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p>hello@thrifty.com</p>
+                <p>San Jose, CA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Thrifty. Built with sustainability in mind.</p>
+        </div>
+    </footer>
+
     <script src="nav.js"></script>
+    <script src="customer.js"></script>
 </body>
 </html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-
+    <title>Store Manager Dashboard - Thrifty</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="manager.css" />
 </head>
 
 <body>
@@ -26,77 +26,193 @@
             <a id="logoutLink" href="#" style="display:none;">Log Out</a>
         </div>
     </nav>
+
     <div class="dashboard-container">
         <div class="dashboard-content">
-            <h1>Store Manager Dashboard - Goodwill Benton Street</h1>
+            <h1>Store Manager Dashboard</h1>
+            <p class="welcome-text">Goodwill - Benton Street | Manager: Lisa Chen</p>
             
+            <!-- Today's Summary -->
             <div class="section">
                 <h2>Today's Summary</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>New Items Listed</h3>
-                        <p>14</p>
+                        <h3 id="items-listed-count">14</h3>
+                        <p>New Items Listed</p>
                     </div>
                     <div class="stat-card">
-                        <h3>Reservations</h3>
-                        <p>3</p>
+                        <h3 id="reservations-count">3</h3>
+                        <p>Active Reservations</p>
                     </div>
                     <div class="stat-card">
-                        <h3>Daily Sales Goal</h3>
-                        <p>75%</p>
+                        <h3 id="sales-goal">75%</h3>
+                        <p>Daily Sales Goal</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="revenue-today">$142</h3>
+                        <p>Revenue Today</p>
                     </div>
                 </div>
             </div>
-            
+
+            <!-- Quick Actions -->
             <div class="section">
-                <h2>Item Inventory</h2>
-                <div class="item-card">
-                    <h3>Items Awaiting Listing (21)</h3>
-                    <p>New items that have been scanned and require photos/descriptions before going live.</p>
-                    <button class="btn-primary">Go to Listing Queue</button>
-                </div>
-                <div class="item-card">
-                    <h3>High-Value Items (7)</h3>
-                    <p>Vintage Levi's, Patagonia, etc.</p>
-                    <button class="btn-primary">View High-Value Items</button>
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <button class="btn-primary" onclick="showListItemModal()">List New Item</button>
+                    <button class="btn-secondary" onclick="showFeedback('Bulk upload feature coming in next update')">Bulk Upload</button>
+                    <button class="btn-secondary" onclick="showAnalytics()">View Analytics</button>
+                    <button class="btn-secondary" onclick="showFeedback('Store settings feature coming in next update')">Store Settings</button>
                 </div>
             </div>
-            
+
+            <!-- Active Reservations -->
             <div class="section">
-                <h3>Active Reservations (3)</h3>
-                
-                <div class="item-card">
-                    <h4>Emma Rodriguez</h4>
-                    <p>Reserved: Nike Air Max ($25)</p>
-                    <p>Expires: Today at 2:45pm</p>
-                    <button class="btn-primary">Contact Customer</button>
-                </div>
-                
-                <div class="item-card">
-                    <h4>Marcus Chan</h4>
-                    <p>Reserved: Patagonia Fleece ($35)</p>
-                    <p>Expires: Tomorrow at 11:20am</p>
-                    <button class="btn-primary">Contact Customer</button>
-                </div>
-                
-                <div class="item-card">
-                    <h4>Sarah Johnson</h4>
-                    <p>Reserved: Vintage Jeans ($18)</p>
-                    <p>Expires: Tomorrow at 9:15pm</p>
-                    <button class="btn-primary">Contact Customer</button>
+                <h2>Active Reservations (<span id="reservation-list-count">3</span>)</h2>
+                <div id="reservations-list">
+                    <!-- Reservation cards will be dynamically inserted here -->
                 </div>
             </div>
-            
+
+            <!-- Recent Listings -->
             <div class="section">
-                <h3>Quick Actions</h3>
-                <button class="btn-primary">Bulk Upload Items</button>
-                <button class="btn-primary">Download Sales Report</button>
-                <button class="btn-primary">Update Store Hours</button>
-                <button class="btn-primary">View Analytics</button>
+                <h2>Recently Listed Items</h2>
+                <div id="recent-listings">
+                    <!-- Recently listed items will appear here -->
+                </div>
+            </div>
+
+            <!-- Inventory Status -->
+            <div class="section">
+                <h2>Inventory Status</h2>
+                <div class="inventory-stats">
+                    <div class="inventory-card">
+                        <h3>Items Awaiting Photos</h3>
+                        <p class="inventory-number">21</p>
+                        <p class="inventory-desc">New donations that need to be photographed and listed</p>
+                        <button class="btn-secondary" onclick="showFeedback('Photo queue feature coming in next update')">Start Listing</button>
+                    </div>
+                    <div class="inventory-card">
+                        <h3>Live on Platform</h3>
+                        <p class="inventory-number" id="live-items-count">87</p>
+                        <p class="inventory-desc">Currently browsable by shoppers</p>
+                        <button class="btn-secondary" onclick="showLiveInventory()">View All</button>
+                    </div>
+                    <div class="inventory-card">
+                        <h3>Reserved Items</h3>
+                        <p class="inventory-number">3</p>
+                        <p class="inventory-desc">Items on hold for customers</p>
+                        <button class="btn-secondary" onclick="document.querySelector('#reservations-list').scrollIntoView({behavior: 'smooth'})">Manage</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="section">
+                <h2>This Week's Performance</h2>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <h4>Total Sales</h4>
+                        <p class="metric-value">$847</p>
+                        <p class="metric-change positive">↑ 23% vs last week</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Items Sold</h4>
+                        <p class="metric-value">42</p>
+                        <p class="metric-change positive">↑ 18% vs last week</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Avg. Sale Price</h4>
+                        <p class="metric-value">$20.17</p>
+                        <p class="metric-change positive">↑ 4% vs last week</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Reservation Rate</h4>
+                        <p class="metric-value">68%</p>
+                        <p class="metric-change negative">↓ 5% vs last week</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- List New Item Modal -->
+    <div id="list-item-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeListItemModal()">&times;</span>
+            <h2>List New Item</h2>
+            <form id="list-item-form" onsubmit="handleListItem(event)">
+                <label>Item Name</label>
+                <input type="text" id="item-name" required placeholder="e.g., Levi's 501 Jeans">
+
+                <label>Category</label>
+                <select id="item-category" required>
+                    <option value="">Select Category</option>
+                    <option value="jeans">Jeans</option>
+                    <option value="shirts">Shirts</option>
+                    <option value="outerwear">Outerwear</option>
+                    <option value="shoes">Shoes</option>
+                </select>
+
+                <label>Size</label>
+                <input type="text" id="item-size" required placeholder="e.g., 32x32, L, 10">
+
+                <label>Brand</label>
+                <input type="text" id="item-brand" required placeholder="e.g., Levi's">
+
+                <label>Condition</label>
+                <select id="item-condition" required>
+                    <option value="">Select Condition</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Very Good">Very Good</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                </select>
+
+                <label>Price ($)</label>
+                <input type="number" id="item-price" required placeholder="15.00" step="0.01" min="0">
+
+                <label>Description</label>
+                <textarea id="item-description" required placeholder="Describe the item's features, materials, and condition..." rows="4"></textarea>
+
+                <label>Upload Photos (simulated)</label>
+                <input type="file" id="item-photos" multiple accept="image/*">
+                <p class="form-note">Tip: Include photos from front, back, and detail views</p>
+
+                <button type="submit" class="btn-primary">List Item</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Thrifty</h3>
+                <p>Making sustainable fashion accessible to everyone.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="browse.html">Browse Items</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>For Stores</h4>
+                <a href="signup.html">Partner With Us</a>
+                <a href="manager.html">Store Dashboard</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p>hello@thrifty.com</p>
+                <p>San Jose, CA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Thrifty. Built with sustainability in mind.</p>
+        </div>
+    </footer>
+
     <script src="nav.js"></script>
+    <script src="manager.js"></script>
 </body>
 </html>

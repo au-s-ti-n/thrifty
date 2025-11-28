@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thrifty</title>
+    <title>Thrifty - Sustainable Thrift Shopping Made Easy</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="home.css" />
 </head>
 
 <body>
@@ -27,21 +28,261 @@
     </nav>
 
     <section class="hero">
-        <div class="search-title">
-            <h1 class="search-title-text">What will you thrift today?</h1>
-        </div>
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="" />
+        <div class="hero-content-wrapper">
+            <div class="search-title">
+                <h1 class="search-title-text">What will you thrift today?</h1>
+                <p class="hero-subtitle">Browse local thrift stores from your home. Sustainable. Affordable. Unique.</p>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="" />
+                <button class="hero-search-btn" onclick="handleHeroSearch()">Search</button>
+            </div>
         </div>
     </section>
 
-    <p>Browse local thrift stores from your home. Sustainble. Affordable. Unique.</p>
-    <br />
-    <p>Featured items...</p>
-    <br />
-    <p>work in progress</p>
+    <!-- Mission Statement Section -->
+    <section class="home-section">
+        <div class="home-content">
+            <h2>Reviving Thrift Shopping for the Digital Age</h2>
+            <p class="section-description">Thrift stores face declining foot traffic as shoppers shift online. We're bridging this gap by bringing thrift inventory to your fingertips while promoting sustainability and supporting local communities.</p>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <h3>72%</h3>
+                    <p>of thrift shoppers want to browse online first</p>
+                </div>
+                <div class="stat-box">
+                    <h3>1,800</h3>
+                    <p>gallons of water saved per pair of thrifted jeans</p>
+                </div>
+                <div class="stat-box">
+                    <h3>24hr</h3>
+                    <p>item reservation to secure your finds</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Items Section with Carousel -->
+    <section class="home-section home-section-alt">
+        <div class="home-content">
+            <h2>Featured Items Near You</h2>
+            <p class="section-description">Freshly added treasures from local thrift stores</p>
+            
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)">‹</button>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Item 1 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/lee/lee_front.jpg" alt="Lee Jeans" class="carousel-image">
+                                <span class="distance-badge">2.3 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>Lee Regular Fit Jeans</h3>
+                                <p class="carousel-meta">Size 34x32 | Goodwill Benton</p>
+                                <p class="carousel-price">$14 <span class="retail-small">$50 retail</span></p>
+                                <p class="impact-text">Saves 18 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='lee_regular_fit_item1.html'">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/patagonia/patagonia_front.jpg" alt="Patagonia Fleece" class="carousel-image">
+                                <span class="distance-badge">2.3 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>Patagonia Better Fleece</h3>
+                                <p class="carousel-meta">Size L | Goodwill Benton</p>
+                                <p class="carousel-price">$38 <span class="retail-small">$99 retail</span></p>
+                                <p class="impact-text">Saves 25 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='item6.html'">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/northface/northface_front.jpg" alt="North Face Jacket" class="carousel-image">
+                                <span class="distance-badge">3.5 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>North Face Thermoball</h3>
+                                <p class="carousel-meta">Size M | Thrifty Village</p>
+                                <p class="carousel-price">$58 <span class="retail-small">$199 retail</span></p>
+                                <p class="impact-text">Saves 45 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='item8.html'">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/nike/nike_side.jpg" alt="Nike Shoes" class="carousel-image">
+                                <span class="distance-badge">5.8 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>Nike Flywire Shoes</h3>
+                                <p class="carousel-meta">Size 10 | Play It Again</p>
+                                <p class="carousel-price">$24 <span class="retail-small">$85 retail</span></p>
+                                <p class="impact-text">Saves 30 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='item10.html'">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/wranglers/wranglers_main_image.jpg" alt="Wrangler Jeans" class="carousel-image">
+                                <span class="distance-badge">2.3 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>Wrangler Relaxed Fit</h3>
+                                <p class="carousel-meta">Size 34x32 | Goodwill Benton</p>
+                                <p class="carousel-price">$16 <span class="retail-small">$65 retail</span></p>
+                                <p class="impact-text">Saves 22 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='wranglers_relaxed_fit_item2.html'">View Details</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 6 -->
+                        <div class="carousel-item">
+                            <div class="carousel-image-container">
+                                <img src="images/carhartt_jacket/carhartt_jacket_front.jpg" alt="Carhartt Jacket" class="carousel-image">
+                                <span class="distance-badge">2.3 mi</span>
+                            </div>
+                            <div class="carousel-details">
+                                <h3>Carhartt Duck Jacket</h3>
+                                <p class="carousel-meta">Size L | Goodwill Benton</p>
+                                <p class="carousel-price">$48 <span class="retail-small">$120 retail</span></p>
+                                <p class="impact-text">Saves 40 lbs CO2</p>
+                                <button class="btn-primary" onclick="window.location.href='item9.html'">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn carousel-next" onclick="moveCarousel(1)">›</button>
+            </div>
+
+            <div class="carousel-dots" id="carousel-dots"></div>
+
+            <div class="browse-all-container">
+                <button class="btn-primary browse-all-btn" onclick="window.location.href='browse.html'">Browse All Items</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="home-section">
+        <div class="home-content">
+            <h2>How Thrifty Works</h2>
+            <div class="steps-grid">
+                <div class="step-box">
+                    <div class="step-number">1</div>
+                    <h3>Browse Online</h3>
+                    <p>Search inventory from multiple local thrift stores in one place. Filter by size, category, price, and distance.</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-number">2</div>
+                    <h3>Reserve Items</h3>
+                    <p>Found something you love? Reserve it for 24 hours with one click. No more missing out on great finds.</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-number">3</div>
+                    <h3>Pick Up In-Store</h3>
+                    <p>Visit the store to try on and purchase. Support local businesses while shopping sustainably.</p>
+                </div>
+            </div>
+            <div class="get-started-container">
+                <button class="btn-primary get-started-btn" onclick="window.location.href='browse.html'">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environmental Impact Section -->
+    <section class="home-section home-section-alt">
+        <div class="home-content">
+            <h2>Your Impact Matters</h2>
+            <p class="section-description">Every thrifted item keeps textile waste out of landfills and reduces the environmental cost of manufacturing new clothing.</p>
+            
+            <div class="impact-grid">
+                <div class="impact-box">
+                    <div class="impact-visual">
+                        <div class="impact-icon-placeholder">💧</div>
+                    </div>
+                    <h3>Water Conservation</h3>
+                    <p>Manufacturing one pair of jeans uses <strong>1,800 gallons of water</strong>. Thrifting saves all of it.</p>
+                    <p class="impact-equivalent">That's equivalent to 28 bathtubs of water</p>
+                </div>
+                <div class="impact-box">
+                    <div class="impact-visual">
+                        <div class="impact-icon-placeholder">♻️</div>
+                    </div>
+                    <h3>Waste Reduction</h3>
+                    <p><strong>85% of textiles</strong> end up in landfills. Thrifting gives clothing a second life.</p>
+                    <p class="impact-equivalent">That's 21 billion pounds of waste annually</p>
+                </div>
+                <div class="impact-box">
+                    <div class="impact-visual">
+                        <div class="impact-icon-placeholder">🌍</div>
+                    </div>
+                    <h3>Carbon Footprint</h3>
+                    <p>Thrifted clothing produces <strong>82% less CO2</strong> than buying new.</p>
+                    <p class="impact-equivalent">Save as much CO2 as driving 50 miles per item!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Thrifty</h3>
+                <p>Making sustainable fashion accessible to everyone.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="browse.html">Browse Items</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>For Stores</h4>
+                <a href="signup.html">Partner With Us</a>
+                <a href="manager.html">Store Dashboard</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <p>hello@thrifty.com</p>
+                <p>San Jose, CA</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Thrifty. Built with sustainability in mind.</p>
+        </div>
+    </footer>
 
     <script src="nav.js"></script>
     <script src="placeholder_anim.js"></script>
+    <script src="carousel.js"></script>
+    <script>
+        function handleHeroSearch() {
+            const searchValue = document.getElementById('search-input').value;
+            if (searchValue.trim()) {
+                sessionStorage.setItem('searchTerm', searchValue);
+            }
+            window.location.href = 'browse.html';
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleHeroSearch();
+            }
+        });
+    </script>
 </body>
 </html>

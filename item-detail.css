@@ -1,0 +1,271 @@
+/* item-detail.css - Styles for all item detail pages (lee_regular_fit_item1.html, etc.) */
+
+.item-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 40px 40px 40px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.breadcrumb a {
+    color: #666;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Item Layout */
+.item-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+/* Image Section */
+.image-section {
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.main-image {
+    width: 100%;
+    height: 500px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.main-image-actual {
+    width: 100%; 
+    height: 500px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.thumbnail-actual {
+    width: 100%;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.thumbnail:hover {
+    border-color: #333;
+}
+
+.thumbnail.active {
+    border-color: #333;
+}
+
+.thumbnail:active {
+    transform: scale(0.95);
+}
+
+/* Details Section */
+.details-section h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.details-section .meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.price-tag {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.price-tag .retail {
+    font-size: 16px;
+    color: #999;
+    font-weight: 400;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.detail-actions .btn-primary,
+.detail-actions .btn-secondary {
+    width: auto;
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+}
+
+/* Info Boxes */
+.description-box {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+}
+
+.description-box h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.description-box p {
+    line-height: 1.7;
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.info-box {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+}
+
+.info-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.info-row {
+    display: flex;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.info-label {
+    font-weight: 600;
+    width: 120px;
+}
+
+.info-value {
+    color: #555;
+}
+
+.impact-box {
+    background: #e8f5e9;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+}
+
+.impact-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.impact-box p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* Similar Items */
+.similar-items {
+    margin-top: 60px;
+}
+
+.similar-items h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.similar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.similar-card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.similar-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.similar-card:active {
+    transform: translateY(0);
+}
+
+.similar-image {
+    width: 100%;
+    height: 180px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.similar-card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.similar-card .meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.similar-card .price {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .item-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .image-section {
+        position: static;
+    }
+
+    .similar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,0 +1,64 @@
+/* auth.css - Styles for login.html and signup.html */
+
+/* Make body full height with flexbox to push footer down */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Auth page wrapper to allow footer at bottom */
+.auth-page-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 40px;
+}
+
+.login-container, .signup-container {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.login-container h2, .signup-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.login-title, .signup-title {
+    text-align: center;
+}
+
+.login-input, .signup-input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+}
+
+.role-select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+.login-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-footer a {
+    color: black;
+    font-weight: 600;
+}
