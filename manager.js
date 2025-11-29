@@ -183,49 +183,113 @@ function closeListItemModal() {
     if (preview) preview.innerHTML = '';
 }
 
-// ENHANCED: Handle photo uploads with preview
+// ENHANCED: Handle photo uploads with AI recognition
 let uploadedPhotos = [];
+let isProcessingImage = false;
 
 document.getElementById('item-photos')?.addEventListener('change', function(e) {
     const files = e.target.files;
-    uploadedPhotos = Array.from(files);
+    if (files.length === 0) return;
     
-    // Create or get preview container
-    let preview = document.getElementById('photo-preview');
-    if (!preview) {
-        preview = document.createElement('div');
-        preview.id = 'photo-preview';
-        preview.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 10px;';
-        e.target.parentElement.appendChild(preview);
-    }
+    uploadedPhotos = Array.from(files);
+    const mainFile = files[0];
+    
+    // Show preview
+    const preview = document.getElementById('photo-preview');
+    if (!preview) return;
     
     preview.innerHTML = '';
     
-    uploadedPhotos.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const photoDiv = document.createElement('div');
-            photoDiv.style.cssText = 'position: relative; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; border: 2px solid #ddd;';
-            photoDiv.innerHTML = `
-                <img src="${event.target.result}" style="width: 100%; height: 100%; object-fit: cover;">
-                <button type="button" onclick="removePhoto(${index})" style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px; padding: 0;">×</button>
-            `;
-            preview.appendChild(photoDiv);
-        };
-        reader.readAsDataURL(file);
-    });
-    
-    DataManager.showFeedback(`${files.length} photo${files.length > 1 ? 's' : ''} ready to upload`, 'success');
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const photoDiv = document.createElement('div');
+        photoDiv.style.cssText = 'position: relative; width: 100%; max-width: 400px; margin: 0 auto;';
+        photoDiv.innerHTML = `
+            <img src="${event.target.result}" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <button type="button" onclick="removePhoto()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 18px; padding: 0;">×</button>
+        `;
+        preview.appendChild(photoDiv);
+        
+        // Start AI processing
+        processImageWithAI(event.target.result);
+    };
+    reader.readAsDataURL(mainFile);
 });
 
-function removePhoto(index) {
-    uploadedPhotos.splice(index, 1);
+function processImageWithAI(imageData) {
+    isProcessingImage = true;
+    
+    // Show loading state
+    const aiStatus = document.getElementById('ai-status');
+    aiStatus.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px; padding: 15px; background: #e3f2fd; border-radius: 8px; margin-top: 15px;">
+            <div class="spinner"></div>
+            <span style="color: #1976d2; font-weight: 600;">Analyzing image with AI...</span>
+        </div>
+    `;
+    
+    // Simulate AI processing with delay (3-4 seconds)
+    const delay = 3000 + Math.random() * 1000;
+    
+    setTimeout(() => {
+        // Hardcoded AI-recognized data
+        const recognizedData = {
+            name: "Levi's 501 Original Fit Jeans",
+            category: "jeans",
+            size: "32x32",
+            brand: "Levi's",
+            condition: "Very Good",
+            price: 24.99,
+            description: "Classic Levi's 501 jeans in dark wash denim. Features button fly, straight leg fit, and traditional five-pocket styling. Minor fading consistent with wear, no tears or stains. Timeless style in excellent condition."
+        };
+        
+        // Fill form fields
+        document.getElementById('item-name').value = recognizedData.name;
+        document.getElementById('item-category').value = recognizedData.category;
+        document.getElementById('item-size').value = recognizedData.size;
+        document.getElementById('item-brand').value = recognizedData.brand;
+        document.getElementById('item-condition').value = recognizedData.condition;
+        document.getElementById('item-price').value = recognizedData.price;
+        document.getElementById('item-description').value = recognizedData.description;
+        
+        // Show success state
+        aiStatus.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px; padding: 15px; background: #e8f5e9; border-radius: 8px; margin-top: 15px;">
+                <span style="color: #2e7d32; font-size: 20px;">✓</span>
+                <span style="color: #2e7d32; font-weight: 600;">Item details recognized! Review and edit below if needed.</span>
+            </div>
+        `;
+        
+        isProcessingImage = false;
+        
+        // Enable form fields for editing
+        enableFormFields();
+    }, delay);
+}
+
+function enableFormFields() {
+    const fields = ['item-name', 'item-category', 'item-size', 'item-brand', 'item-condition', 'item-price', 'item-description'];
+    fields.forEach(id => {
+        const field = document.getElementById(id);
+        if (field) {
+            field.disabled = false;
+            field.style.background = 'white';
+        }
+    });
+}
+
+function removePhoto() {
+    uploadedPhotos = [];
     document.getElementById('item-photos').value = '';
     const preview = document.getElementById('photo-preview');
-    if (preview) {
-        const children = Array.from(preview.children);
-        if (children[index]) children[index].remove();
-    }
+    if (preview) preview.innerHTML = '';
+    
+    const aiStatus = document.getElementById('ai-status');
+    if (aiStatus) aiStatus.innerHTML = '';
+    
+    // Clear form fields
+    document.getElementById('list-item-form').reset();
+    
     DataManager.showFeedback('Photo removed', 'info');
 }
 

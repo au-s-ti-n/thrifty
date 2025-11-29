@@ -198,7 +198,7 @@
 .modal-content {
     background: white;
     border-radius: 12px;
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
@@ -271,6 +271,26 @@
     width: 100%;
     padding: 14px;
     font-size: 16px;
+}
+
+/* Upload Box Hover Effect */
+.upload-box:hover {
+    border-color: #667eea !important;
+    background: #f8f9ff !important;
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e3f2fd;
+    border-top-color: #1976d2;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive */

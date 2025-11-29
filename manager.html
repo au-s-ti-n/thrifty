@@ -141,43 +141,70 @@
         <div class="modal-content">
             <span class="modal-close" onclick="closeListItemModal()">&times;</span>
             <h2>List New Item</h2>
+            
             <form id="list-item-form" onsubmit="handleListItem(event)">
-                <label>Item Name</label>
-                <input type="text" id="item-name" required placeholder="e.g., Levi's 501 Jeans">
+                <!-- AI Image Recognition Section -->
+                <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 20px;">🤖</span> AI Image Recognition
+                    </h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+                        Upload a photo and our AI will automatically identify the item details
+                    </p>
+                    
+                    <label class="upload-box" for="item-photos" style="display: block; border: 3px dashed #ddd; border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: white;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📸</div>
+                        <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">Click to upload item photo</div>
+                        <div style="font-size: 13px; color: #999;">PNG, JPG up to 10MB</div>
+                    </label>
+                    <input type="file" id="item-photos" accept="image/*" style="display: none;">
+                    
+                    <div id="photo-preview" style="margin-top: 20px;"></div>
+                    <div id="ai-status"></div>
+                </div>
+                
+                <!-- Divider -->
+                <div style="display: flex; align-items: center; gap: 15px; margin: 30px 0;">
+                    <div style="flex: 1; height: 1px; background: #ddd;"></div>
+                    <span style="color: #999; font-size: 14px; font-weight: 600;">OR ENTER MANUALLY</span>
+                    <div style="flex: 1; height: 1px; background: #ddd;"></div>
+                </div>
+                
+                <!-- Manual Input Section -->
+                <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+                    <label>Item Name</label>
+                    <input type="text" id="item-name" required placeholder="e.g., Levi's 501 Jeans">
 
-                <label>Category</label>
-                <select id="item-category" required>
-                    <option value="">Select Category</option>
-                    <option value="jeans">Jeans</option>
-                    <option value="shirts">Shirts</option>
-                    <option value="outerwear">Outerwear</option>
-                    <option value="shoes">Shoes</option>
-                </select>
+                    <label>Category</label>
+                    <select id="item-category" required>
+                        <option value="">Select Category</option>
+                        <option value="jeans">Jeans</option>
+                        <option value="shirts">Shirts</option>
+                        <option value="outerwear">Outerwear</option>
+                        <option value="shoes">Shoes</option>
+                    </select>
 
-                <label>Size</label>
-                <input type="text" id="item-size" required placeholder="e.g., 32x32, L, 10">
+                    <label>Size</label>
+                    <input type="text" id="item-size" required placeholder="e.g., 32x32, L, 10">
 
-                <label>Brand</label>
-                <input type="text" id="item-brand" required placeholder="e.g., Levi's">
+                    <label>Brand</label>
+                    <input type="text" id="item-brand" required placeholder="e.g., Levi's">
 
-                <label>Condition</label>
-                <select id="item-condition" required>
-                    <option value="">Select Condition</option>
-                    <option value="Excellent">Excellent</option>
-                    <option value="Very Good">Very Good</option>
-                    <option value="Good">Good</option>
-                    <option value="Fair">Fair</option>
-                </select>
+                    <label>Condition</label>
+                    <select id="item-condition" required>
+                        <option value="">Select Condition</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Very Good">Very Good</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                    </select>
 
-                <label>Price ($)</label>
-                <input type="number" id="item-price" required placeholder="15.00" step="0.01" min="0">
+                    <label>Price ($)</label>
+                    <input type="number" id="item-price" required placeholder="15.00" step="0.01" min="0">
 
-                <label>Description</label>
-                <textarea id="item-description" required placeholder="Describe the item's features, materials, and condition..." rows="4"></textarea>
-
-                <label>Upload Photos (simulated)</label>
-                <input type="file" id="item-photos" multiple accept="image/*">
-                <p class="form-note">Tip: Include photos from front, back, and detail views</p>
+                    <label>Description</label>
+                    <textarea id="item-description" required placeholder="Describe the item's features, materials, and condition..." rows="4"></textarea>
+                </div>
 
                 <button type="submit" class="btn-primary">List Item</button>
             </form>
