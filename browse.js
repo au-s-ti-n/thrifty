@@ -1,9 +1,6 @@
-// browse.js
-
 (function() {
-    // Wait for DataManager to be available
     if (typeof DataManager === 'undefined') {
-        console.error('DataManager not loaded! Make sure dataManager.js is included first.');
+        console.error('DataManager not loaded!');
         return;
     }
 
@@ -15,10 +12,8 @@
     const clearFiltersBtn = document.getElementById('clear-filters');
     const searchInput = document.getElementById('search-input');
 
-    // Add manager listings to browse page
     addManagerListingsToBrowse();
 
-    // Check if user came from homepage with search term
     const savedSearchTerm = sessionStorage.getItem('searchTerm');
     if (savedSearchTerm && searchInput) {
         searchInput.value = savedSearchTerm;
@@ -26,7 +21,6 @@
         applyFilters();
     }
 
-    // FIXED: Initialize saved button states on page load
     updateAllSaveButtons();
 
     function addManagerListingsToBrowse() {
@@ -36,7 +30,6 @@
         const mainContent = document.querySelector('.main-content');
         if (!mainContent) return;
 
-        // Add manager listings as item cards
         managerListings.forEach(listing => {
             const card = document.createElement('div');
             card.className = 'item-card';
@@ -67,12 +60,11 @@
                     </div>
                     <div class="item-actions">
                         <button class="btn-primary" onclick="DataManager.showFeedback('Detail page coming soon for new listings', 'info')">View Details</button>
-                        <button class="btn-secondary save-btn" onclick="toggleSave(this, '${listing.name.replace(/'/g, "\\'")}')">Save</button>
+                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this, '${listing.name.replace(/'/g, "\\'")}')">Save</button>
                     </div>
                 </div>
             `;
             
-            // Insert at the top (most recent first)
             const firstCard = mainContent.querySelector('.item-card');
             if (firstCard) {
                 mainContent.insertBefore(card, firstCard);
@@ -80,15 +72,16 @@
                 mainContent.appendChild(card);
             }
         });
+
+        // After inserting manager listings, ensure save buttons reflect state
+        updateAllSaveButtons();
     }
 
-    // FIXED: Update all save buttons to reflect current saved state
     function updateAllSaveButtons() {
         const saveButtons = document.querySelectorAll('.save-btn');
         saveButtons.forEach(btn => {
             const card = btn.closest('.item-card');
             if (!card) return;
-            
             const itemName = card.dataset.name || card.querySelector('h3')?.textContent;
             if (itemName && DataManager.isItemSaved(itemName)) {
                 btn.textContent = '✓ Saved';
@@ -105,28 +98,22 @@
     function applyFilters() {
         const itemCards = document.querySelectorAll('.item-card');
         
-        // Get selected categories
         const selectedCategories = Array.from(categoryFilters)
             .filter(input => input.checked)
             .map(input => input.dataset.category);
 
-        // Get selected sizes
         const selectedSizes = Array.from(sizeFilters)
             .filter(input => input.checked)
             .map(input => input.dataset.size);
 
-        // Get selected distance
         const selectedDistance = document.querySelector('[name="distance"]:checked');
         const maxDistance = selectedDistance ? parseFloat(selectedDistance.value) : Infinity;
 
-        // Get price range
         const minPrice = priceMinInput ? (priceMinInput.value ? parseFloat(priceMinInput.value) : 0) : 0;
         const maxPrice = priceMaxInput ? (priceMaxInput.value ? parseFloat(priceMaxInput.value) : Infinity) : Infinity;
 
-        // Get search term
         const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-        // Filter each item card
         let visibleCount = 0;
         itemCards.forEach(card => {
             const itemCategory = card.dataset.category;
@@ -139,37 +126,19 @@
 
             let show = true;
 
-            // Category filter
-            if (selectedCategories.length > 0 && !selectedCategories.includes(itemCategory)) {
-                show = false;
-            }
+            if (selectedCategories.length > 0 && !selectedCategories.includes(itemCategory)) show = false;
+            if (selectedSizes.length > 0 && !selectedSizes.includes(itemSize)) show = false;
+            if (itemPrice < minPrice || itemPrice > maxPrice) show = false;
+            if (maxDistance !== Infinity && itemDistance > maxDistance) show = false;
 
-            // Size filter
-            if (selectedSizes.length > 0 && !selectedSizes.includes(itemSize)) {
-                show = false;
-            }
-
-            // Price filter
-            if (itemPrice < minPrice || itemPrice > maxPrice) {
-                show = false;
-            }
-
-            // Distance filter
-            if (maxDistance !== Infinity && itemDistance > maxDistance) {
-                show = false;
-            }
-
-            // Search filter
             if (searchTerm) {
-                const matchesSearch = itemName.includes(searchTerm) || 
-                                     itemBrand.includes(searchTerm) || 
-                                     itemDescription.includes(searchTerm);
-                if (!matchesSearch) {
-                    show = false;
-                }
+                const matchesSearch =
+                    itemName.includes(searchTerm) ||
+                    itemBrand.includes(searchTerm) ||
+                    itemDescription.includes(searchTerm);
+                if (!matchesSearch) show = false;
             }
 
-            // Show or hide the card
             if (show) {
                 card.classList.remove('hidden');
                 visibleCount++;
@@ -214,7 +183,6 @@
         }
     }
 
-    // Add event listeners to all filters
     if (categoryFilters.length > 0) {
         categoryFilters.forEach(filter => {
             filter.addEventListener('change', applyFilters);
@@ -237,7 +205,6 @@
     if (priceMaxInput) priceMaxInput.addEventListener('input', applyFilters);
     if (searchInput) searchInput.addEventListener('input', applyFilters);
 
-    // Clear all filters
     if (clearFiltersBtn) {
         clearFiltersBtn.addEventListener('click', () => {
             categoryFilters.forEach(filter => filter.checked = false);
@@ -258,7 +225,6 @@
         });
     }
 
-    // Make item cards clickable
     const itemCards = document.querySelectorAll('.item-card');
     itemCards.forEach(card => {
         card.addEventListener('click', function(e) {
@@ -273,14 +239,11 @@
         });
     });
 
-    // Initial results count
     const visibleItems = Array.from(document.querySelectorAll('.item-card')).filter(card => !card.classList.contains('hidden')).length;
     updateResultsCount(visibleItems);
 })();
 
-// FIXED: Toggle save button with proper syncing
 function toggleSave(btn, itemName) {
-    // Check if logged in
     if (!DataManager.isLoggedIn()) {
         const loginPanel = document.createElement('div');
         loginPanel.className = 'confirm-panel';
@@ -298,7 +261,6 @@ function toggleSave(btn, itemName) {
         return;
     }
 
-    // Get item name if not provided
     if (!itemName) {
         const card = btn.closest('.item-card');
         itemName = card.dataset.name || card.querySelector('h3')?.textContent;
@@ -306,11 +268,9 @@ function toggleSave(btn, itemName) {
 
     if (!itemName) return;
 
-    // FIXED: Check current state and toggle properly
     const isCurrentlySaved = DataManager.isItemSaved(itemName);
-    
+
     if (!isCurrentlySaved) {
-        // Save the item
         if (DataManager.addSavedItem(itemName)) {
             btn.textContent = '✓ Saved';
             btn.style.background = '#333';
@@ -318,7 +278,6 @@ function toggleSave(btn, itemName) {
             DataManager.showFeedback('Added to saved items!', 'success');
         }
     } else {
-        // Unsave the item
         DataManager.removeSavedItem(itemName);
         btn.textContent = 'Save';
         btn.style.background = 'white';
