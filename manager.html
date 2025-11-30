@@ -55,14 +55,13 @@
                 </div>
             </div>
 
-            <!-- Quick Actions -->
+            <!-- Quick Actions - Only working features -->
             <div class="section">
                 <h2>Quick Actions</h2>
                 <div class="quick-actions">
-                    <button class="btn-primary" onclick="showListItemModal()">List New Item</button>
-                    <button class="btn-secondary" onclick="showFeedback('Bulk upload feature coming in next update')">Bulk Upload</button>
-                    <button class="btn-secondary" onclick="showAnalytics()">View Analytics</button>
-                    <button class="btn-secondary" onclick="showFeedback('Store settings feature coming in next update')">Store Settings</button>
+                    <button class="btn-primary" onclick="showListItemModal()">📸 List New Item</button>
+                    <button class="btn-secondary" onclick="showAnalytics()">📊 View Analytics</button>
+                    <button class="btn-secondary" onclick="showStoreSettings()">⚙️ Store Settings</button>
                 </div>
             </div>
 
@@ -90,7 +89,7 @@
                         <h3>Items Awaiting Photos</h3>
                         <p class="inventory-number">21</p>
                         <p class="inventory-desc">New donations that need to be photographed and listed</p>
-                        <button class="btn-secondary" onclick="showFeedback('Photo queue feature coming in next update')">Start Listing</button>
+                        <button class="btn-secondary" onclick="showListItemModal()">Start Listing</button>
                     </div>
                     <div class="inventory-card">
                         <h3>Live on Platform</h3>
@@ -136,7 +135,7 @@
         </div>
     </div>
 
-    <!-- List New Item Modal -->
+    <!-- List New Item Modal with AI -->
     <div id="list-item-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="modal-close" onclick="closeListItemModal()">&times;</span>
@@ -144,18 +143,18 @@
             
             <form id="list-item-form" onsubmit="handleListItem(event)">
                 <!-- AI Image Recognition Section -->
-                <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 12px; margin-bottom: 25px; color: white;">
                     <h3 style="font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 20px;">🤖</span> AI Image Recognition
                     </h3>
-                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+                    <p style="font-size: 14px; margin-bottom: 15px; opacity: 0.95;">
                         Upload a photo and our AI will automatically identify the item details
                     </p>
                     
-                    <label class="upload-box" for="item-photos" style="display: block; border: 3px dashed #ddd; border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: white;">
+                    <label class="upload-box" for="item-photos" style="display: block; border: 3px dashed rgba(255,255,255,0.5); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.1);">
                         <div style="font-size: 48px; margin-bottom: 10px;">📸</div>
-                        <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px;">Click to upload item photo</div>
-                        <div style="font-size: 13px; color: #999;">PNG, JPG up to 10MB</div>
+                        <div style="font-size: 16px; font-weight: 600; margin-bottom: 5px;">Click to upload item photo</div>
+                        <div style="font-size: 13px; opacity: 0.9;">PNG, JPG up to 10MB</div>
                     </label>
                     <input type="file" id="item-photos" accept="image/*" style="display: none;">
                     
@@ -206,7 +205,7 @@
                     <textarea id="item-description" required placeholder="Describe the item's features, materials, and condition..." rows="4"></textarea>
                 </div>
 
-                <button type="submit" class="btn-primary">List Item</button>
+                <button type="submit" class="btn-primary">📤 List Item on Platform</button>
             </form>
         </div>
     </div>

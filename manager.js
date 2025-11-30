@@ -1,6 +1,5 @@
 // manager.js
 
-// Sample data for reservations
 let storeReservations = [
     {
         customerName: "Emma Rodriguez",
@@ -16,11 +15,19 @@ let storeReservations = [
     }
 ];
 
-// Load everything on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadRecentListings();
     loadStoreReservations();
     updateDashboardStats();
+    
+    // Update Store Settings button to actually work
+    const settingsBtn = document.querySelector('.btn-secondary[onclick*="Store Settings"]');
+    if (settingsBtn) {
+        settingsBtn.setAttribute('onclick', 'showStoreSettings()');
+    }
+    
+    // Setup AI photo upload handler
+    setupPhotoUpload();
 });
 
 function loadStoreReservations() {
@@ -74,8 +81,6 @@ function loadRecentListings() {
     }
 
     container.innerHTML = '';
-    
-    // Show most recent listings first
     const recentListings = [...managerListings].reverse().slice(0, 10);
     
     recentListings.forEach((item) => {
@@ -97,7 +102,6 @@ function loadRecentListings() {
 
 function updateDashboardStats() {
     const listings = DataManager.getManagerListings();
-    const currentCount = parseInt(document.getElementById('live-items-count').textContent);
     const newTotal = 10 + listings.length;
     document.getElementById('live-items-count').textContent = newTotal;
 }
@@ -120,13 +124,9 @@ function completeReservation(index) {
 
 function confirmSale(index) {
     const soldItem = storeReservations.splice(index, 1)[0];
-    
-    const reservationCount = Math.max(0, storeReservations.length);
-    document.getElementById('reservations-count').textContent = reservationCount;
-    
+    document.getElementById('reservations-count').textContent = Math.max(0, storeReservations.length);
     const revenue = parseInt(document.getElementById('revenue-today').textContent.replace('$', ''));
     document.getElementById('revenue-today').textContent = '$' + (revenue + soldItem.price);
-    
     loadStoreReservations();
     DataManager.showFeedback(`Sale completed! ${soldItem.item} sold for $${soldItem.price}`, 'success');
 }
@@ -178,104 +178,140 @@ function showListItemModal() {
 function closeListItemModal() {
     document.getElementById('list-item-modal').style.display = 'none';
     document.getElementById('list-item-form').reset();
-    // Clear photo preview if exists
     const preview = document.getElementById('photo-preview');
     if (preview) preview.innerHTML = '';
+    const aiStatus = document.getElementById('ai-status');
+    if (aiStatus) aiStatus.innerHTML = '';
+    uploadedPhotos = [];
+    isProcessingImage = false;
 }
 
-// ENHANCED: Handle photo uploads with AI recognition
+// ENHANCED AI PHOTO UPLOAD SYSTEM
 let uploadedPhotos = [];
 let isProcessingImage = false;
 
-document.getElementById('item-photos')?.addEventListener('change', function(e) {
-    const files = e.target.files;
-    if (files.length === 0) return;
+function setupPhotoUpload() {
+    const photoInput = document.getElementById('item-photos');
+    if (!photoInput) return;
     
-    uploadedPhotos = Array.from(files);
-    const mainFile = files[0];
-    
-    // Show preview
-    const preview = document.getElementById('photo-preview');
-    if (!preview) return;
-    
-    preview.innerHTML = '';
-    
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const photoDiv = document.createElement('div');
-        photoDiv.style.cssText = 'position: relative; width: 100%; max-width: 400px; margin: 0 auto;';
-        photoDiv.innerHTML = `
-            <img src="${event.target.result}" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-            <button type="button" onclick="removePhoto()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 18px; padding: 0;">×</button>
-        `;
-        preview.appendChild(photoDiv);
+    photoInput.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files.length === 0) return;
         
-        // Start AI processing
-        processImageWithAI(event.target.result);
-    };
-    reader.readAsDataURL(mainFile);
-});
+        uploadedPhotos = Array.from(files);
+        const mainFile = files[0];
+        
+        const preview = document.getElementById('photo-preview');
+        if (!preview) return;
+        
+        preview.innerHTML = '';
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const photoDiv = document.createElement('div');
+            photoDiv.style.cssText = 'position: relative; width: 100%; max-width: 400px; margin: 0 auto;';
+            photoDiv.innerHTML = `
+                <img src="${event.target.result}" style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <button type="button" onclick="removePhoto()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 18px; padding: 0;">×</button>
+            `;
+            preview.appendChild(photoDiv);
+            
+            // Start enhanced AI processing
+            processImageWithAI(event.target.result);
+        };
+        reader.readAsDataURL(mainFile);
+    });
+}
 
 function processImageWithAI(imageData) {
     isProcessingImage = true;
     
-    // Show loading state
     const aiStatus = document.getElementById('ai-status');
     aiStatus.innerHTML = `
         <div style="display: flex; align-items: center; gap: 10px; padding: 15px; background: #e3f2fd; border-radius: 8px; margin-top: 15px;">
             <div class="spinner"></div>
-            <span style="color: #1976d2; font-weight: 600;">Analyzing image with AI...</span>
+            <span style="color: #1976d2; font-weight: 600;">🤖 Analyzing image with AI...</span>
         </div>
     `;
     
-    // Simulate AI processing with delay (3-4 seconds)
-    const delay = 3000 + Math.random() * 1000;
+    // Simulate realistic AI processing (3-5 seconds)
+    const delay = 3000 + Math.random() * 2000;
     
     setTimeout(() => {
-        // Hardcoded AI-recognized data
-        const recognizedData = {
-            name: "Levi's 501 Original Fit Jeans",
-            category: "jeans",
-            size: "32x32",
-            brand: "Levi's",
-            condition: "Very Good",
-            price: 24.99,
-            description: "Classic Levi's 501 jeans in dark wash denim. Features button fly, straight leg fit, and traditional five-pocket styling. Minor fading consistent with wear, no tears or stains. Timeless style in excellent condition."
-        };
+        // Improved AI recognition with multiple possible results
+        const possibleItems = [
+            {
+                name: "Levi's 501 Original Fit Jeans",
+                category: "jeans",
+                size: "32x32",
+                brand: "Levi's",
+                condition: "Very Good",
+                price: 24.99,
+                description: "Classic Levi's 501 jeans in dark wash denim. Features button fly, straight leg fit, and traditional five-pocket styling. Minor fading consistent with wear, no tears or stains. Timeless style in excellent condition."
+            },
+            {
+                name: "Wrangler Cowboy Cut Regular Fit Jeans",
+                category: "jeans",
+                size: "34x32",
+                brand: "Wrangler",
+                condition: "Excellent",
+                price: 18.99,
+                description: "Authentic Wrangler cowboy cut jeans with signature W stitching. Regular fit with classic five-pocket design. Medium wash with natural fading. Durable cotton denim built to last."
+            },
+            {
+                name: "Lee Regular Fit Straight Leg Jeans",
+                category: "jeans",
+                size: "33x32",
+                brand: "Lee",
+                condition: "Good",
+                price: 16.99,
+                description: "Lee regular fit jeans in medium stonewash. Comfortable straight leg cut with classic styling. Shows normal wear with no defects. Great everyday jeans at an affordable price."
+            }
+        ];
         
-        // Fill form fields
-        document.getElementById('item-name').value = recognizedData.name;
-        document.getElementById('item-category').value = recognizedData.category;
-        document.getElementById('item-size').value = recognizedData.size;
-        document.getElementById('item-brand').value = recognizedData.brand;
-        document.getElementById('item-condition').value = recognizedData.condition;
-        document.getElementById('item-price').value = recognizedData.price;
-        document.getElementById('item-description').value = recognizedData.description;
+        // Randomly select one
+        const recognizedData = possibleItems[Math.floor(Math.random() * possibleItems.length)];
         
-        // Show success state
-        aiStatus.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 10px; padding: 15px; background: #e8f5e9; border-radius: 8px; margin-top: 15px;">
-                <span style="color: #2e7d32; font-size: 20px;">✓</span>
-                <span style="color: #2e7d32; font-weight: 600;">Item details recognized! Review and edit below if needed.</span>
-            </div>
-        `;
+        // Fill form fields with animation
+        setTimeout(() => {
+            document.getElementById('item-name').value = recognizedData.name;
+        }, 200);
+        setTimeout(() => {
+            document.getElementById('item-category').value = recognizedData.category;
+        }, 400);
+        setTimeout(() => {
+            document.getElementById('item-size').value = recognizedData.size;
+        }, 600);
+        setTimeout(() => {
+            document.getElementById('item-brand').value = recognizedData.brand;
+        }, 800);
+        setTimeout(() => {
+            document.getElementById('item-condition').value = recognizedData.condition;
+        }, 1000);
+        setTimeout(() => {
+            document.getElementById('item-price').value = recognizedData.price;
+        }, 1200);
+        setTimeout(() => {
+            document.getElementById('item-description').value = recognizedData.description;
+        }, 1400);
         
-        isProcessingImage = false;
-        
-        // Enable form fields for editing
-        enableFormFields();
+        // Show enhanced success state
+        setTimeout(() => {
+            aiStatus.innerHTML = `
+                <div style="padding: 20px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px; margin-top: 15px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+                        <span style="color: #2e7d32; font-size: 28px;">✓</span>
+                        <div>
+                            <p style="color: #2e7d32; font-weight: 700; font-size: 16px; margin: 0;">Item Recognized!</p>
+                            <p style="color: #555; font-size: 13px; margin: 5px 0 0 0;">AI detected: <strong>${recognizedData.brand} ${recognizedData.category}</strong></p>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-size: 13px; margin: 0;">All fields have been automatically filled. Review and edit if needed below.</p>
+                </div>
+            `;
+            isProcessingImage = false;
+        }, 1600);
     }, delay);
-}
-
-function enableFormFields() {
-    const fields = ['item-name', 'item-category', 'item-size', 'item-brand', 'item-condition', 'item-price', 'item-description'];
-    fields.forEach(id => {
-        const field = document.getElementById(id);
-        if (field) {
-            field.disabled = false;
-            field.style.background = 'white';
-        }
-    });
 }
 
 function removePhoto() {
@@ -283,13 +319,9 @@ function removePhoto() {
     document.getElementById('item-photos').value = '';
     const preview = document.getElementById('photo-preview');
     if (preview) preview.innerHTML = '';
-    
     const aiStatus = document.getElementById('ai-status');
     if (aiStatus) aiStatus.innerHTML = '';
-    
-    // Clear form fields
     document.getElementById('list-item-form').reset();
-    
     DataManager.showFeedback('Photo removed', 'info');
 }
 
@@ -307,23 +339,21 @@ function handleListItem(event) {
         photoCount: uploadedPhotos.length
     };
     
-    // Add to manager listings
-    const newItem = DataManager.addManagerListing(itemData);
+    DataManager.addManagerListing(itemData);
     
-    // Update counters
     const itemsListedCount = parseInt(document.getElementById('items-listed-count').textContent);
     document.getElementById('items-listed-count').textContent = itemsListedCount + 1;
     
-    // Reload listings
     loadRecentListings();
     updateDashboardStats();
     
-    // Clear photos
     uploadedPhotos = [];
-    
-    // Close modal and show success
     closeListItemModal();
-    DataManager.showFeedback(`Success! ${itemData.name} listed for $${itemData.price}${itemData.photoCount > 0 ? ` with ${itemData.photoCount} photo(s)` : ''}. Now visible on browse page!`, 'success');
+    
+    DataManager.showFeedback(
+        `✓ Success! ${itemData.name} listed for $${itemData.price}${itemData.photoCount > 0 ? ` with ${itemData.photoCount} photo(s)` : ''}. Now visible on browse page!`,
+        'success'
+    );
 }
 
 function editListing(id) {
@@ -337,7 +367,7 @@ function editListing(id) {
         <div class="directions-content">
             <button class="close-directions" onclick="this.parentElement.parentElement.remove()">×</button>
             <h3>Edit: ${item.name}</h3>
-            <form onsubmit="saveEdit(event, '${id}')" style="margin-top: 20px;">
+            <form onsubmit="saveEdit(event, '${item.id}')" style="margin-top: 20px;">
                 <label style="display: block; margin: 10px 0 5px; font-weight: 600;">Price</label>
                 <input type="number" id="edit-price" value="${item.price}" step="0.01" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
                 
@@ -366,7 +396,6 @@ function saveEdit(event, id) {
     DataManager.showFeedback('Listing updated successfully!', 'success');
 }
 
-// ENHANCED: Remove listing with proper confirmation
 function removeListing(id) {
     const listings = DataManager.getManagerListings();
     const item = listings.find(l => l.id === id);
@@ -377,7 +406,7 @@ function removeListing(id) {
     confirmPanel.innerHTML = `
         <div class="confirm-content">
             <h3>Remove "${item.name}"?</h3>
-            <p>This item will be removed from the browse page and no longer visible to shoppers.</p>
+            <p>This item will be removed from the browse page and returned to your store inventory.</p>
             <div style="display: flex; gap: 10px; margin-top: 20px;">
                 <button class="btn-secondary" onclick="this.closest('.confirm-panel').remove()" style="flex: 1;">Cancel</button>
                 <button class="btn-cancel" onclick="confirmRemove('${id}'); this.closest('.confirm-panel').remove();" style="flex: 1;">Remove Listing</button>
@@ -391,7 +420,7 @@ function confirmRemove(id) {
     DataManager.removeManagerListing(id);
     loadRecentListings();
     updateDashboardStats();
-    DataManager.showFeedback('Listing removed from marketplace.', 'info');
+    DataManager.showFeedback('Listing removed and returned to store inventory.', 'info');
 }
 
 function showAnalytics() {
@@ -423,7 +452,6 @@ function showAnalytics() {
     document.body.appendChild(analyticsPanel);
 }
 
-// NEW: Separate pages for Start Listing and Live on Platform
 function showLiveInventory() {
     const listings = DataManager.getManagerListings();
     const inventoryPanel = document.createElement('div');
@@ -449,17 +477,16 @@ function showLiveInventory() {
                             <button class="btn-cancel btn-small" onclick="removeListing('${item.id}'); this.closest('.modal').remove();">Remove</button>
                         </div>
                     </div>
-                `).join('') : '<p style="color: #999;">No manager listings yet.</p>'}
+                `).join('') : '<p style="color: #999;">No manager listings yet. Use "List New Item" to add your first!</p>'}
             </div>
             
             <div style="padding: 20px; background: #e8f5e9; border-radius: 12px; margin-top: 20px;">
-                <strong>Original Inventory:</strong> 10 items (Lee Jeans, Wrangler Jeans, etc.)
+                <strong>Original Inventory:</strong> 10 items (Lee Jeans, Wrangler Jeans, Levi's 505, etc.)
             </div>
         </div>
     `;
     document.body.appendChild(inventoryPanel);
     
-    // Close on outside click
     inventoryPanel.addEventListener('click', function(e) {
         if (e.target === inventoryPanel) {
             inventoryPanel.remove();
@@ -467,8 +494,10 @@ function showLiveInventory() {
     });
 }
 
-// NEW: Store Settings Implementation
+// WORKING STORE SETTINGS
 function showStoreSettings() {
+    const currentSettings = JSON.parse(sessionStorage.getItem('storeSettings') || '{"storeName":"Goodwill - Benton Street","hours":"Mon-Sat: 9AM-8PM, Sun: 10AM-6PM","phone":"(408) 555-0123","autoDiscountDays":"30","discountPercent":"20","co2Goal":"500"}');
+    
     const settingsModal = document.createElement('div');
     settingsModal.className = 'modal';
     settingsModal.style.display = 'flex';
@@ -482,42 +511,42 @@ function showStoreSettings() {
                 <h3 style="font-size: 18px; margin: 20px 0 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Store Information</h3>
                 
                 <label>Store Name</label>
-                <input type="text" id="store-name" value="Goodwill - Benton Street" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+                <input type="text" id="store-name" value="${currentSettings.storeName}" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <label>Store Hours</label>
-                <input type="text" id="store-hours" value="Mon-Sat: 9AM-8PM, Sun: 10AM-6PM" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+                <input type="text" id="store-hours" value="${currentSettings.hours}" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <label>Contact Phone</label>
-                <input type="tel" id="store-phone" value="(408) 555-0123" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+                <input type="tel" id="store-phone" value="${currentSettings.phone}" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <h3 style="font-size: 18px; margin: 30px 0 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Pricing Rules</h3>
                 
                 <label>Auto-discount items after (days)</label>
-                <input type="number" id="auto-discount-days" value="30" min="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px;">
+                <input type="number" id="auto-discount-days" value="${currentSettings.autoDiscountDays}" min="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px;">
                 <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Items will be automatically discounted after this many days</p>
                 
                 <label>Discount percentage (%)</label>
-                <input type="number" id="discount-percent" value="20" min="0" max="100" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+                <input type="number" id="discount-percent" value="${currentSettings.discountPercent}" min="0" max="100" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <h3 style="font-size: 18px; margin: 30px 0 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Notifications</h3>
                 
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <input type="checkbox" checked> Email when new reservation is made
+                    <input type="checkbox" id="notif-reservation" checked> Email when new reservation is made
                 </label>
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <input type="checkbox" checked> SMS alerts for expiring reservations
+                    <input type="checkbox" id="notif-sms" checked> SMS alerts for expiring reservations
                 </label>
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <input type="checkbox"> Daily inventory summary
+                    <input type="checkbox" id="notif-daily"> Daily inventory summary
                 </label>
                 
                 <h3 style="font-size: 18px; margin: 30px 0 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Sustainability Goals</h3>
                 
                 <label>Monthly CO2 Savings Goal (lbs)</label>
-                <input type="number" id="co2-goal" value="500" min="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+                <input type="number" id="co2-goal" value="${currentSettings.co2Goal}" min="0" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <input type="checkbox" checked> Display sustainability metrics to customers
+                    <input type="checkbox" id="display-metrics" checked> Display sustainability metrics to customers
                 </label>
                 
                 <button type="submit" class="btn-primary" style="margin-top: 20px;">Save All Settings</button>
@@ -526,7 +555,6 @@ function showStoreSettings() {
     `;
     document.body.appendChild(settingsModal);
     
-    // Close on outside click
     settingsModal.addEventListener('click', function(e) {
         if (e.target === settingsModal) {
             settingsModal.remove();
@@ -543,30 +571,25 @@ function saveStoreSettings(event) {
         phone: document.getElementById('store-phone').value,
         autoDiscountDays: document.getElementById('auto-discount-days').value,
         discountPercent: document.getElementById('discount-percent').value,
-        co2Goal: document.getElementById('co2-goal').value
+        co2Goal: document.getElementById('co2-goal').value,
+        notifications: {
+            reservation: document.getElementById('notif-reservation').checked,
+            sms: document.getElementById('notif-sms').checked,
+            daily: document.getElementById('notif-daily').checked
+        },
+        displayMetrics: document.getElementById('display-metrics').checked
     };
     
-    // In production, this would save to a database
     sessionStorage.setItem('storeSettings', JSON.stringify(settings));
     
     document.querySelector('.modal').remove();
-    DataManager.showFeedback('Store settings saved successfully!', 'success');
+    DataManager.showFeedback('✓ Store settings saved successfully!', 'success');
 }
 
-// Update quick actions to use new store settings
-document.addEventListener('DOMContentLoaded', function() {
-    const settingsBtn = document.querySelector('.btn-secondary[onclick*="Store Settings"]');
-    if (settingsBtn) {
-        settingsBtn.onclick = showStoreSettings;
-    }
-});
-
-// Show feedback
 function showFeedback(message, type) {
     DataManager.showFeedback(message, type);
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('list-item-modal');
     if (event.target === modal) {

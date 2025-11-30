@@ -1,4 +1,4 @@
-// browse.js - Fully integrated with manager listings and saved items
+// browse.js
 
 (function() {
     // Wait for DataManager to be available
@@ -26,7 +26,7 @@
         applyFilters();
     }
 
-    // Initialize saved button states
+    // FIXED: Initialize saved button states on page load
     updateAllSaveButtons();
 
     function addManagerListingsToBrowse() {
@@ -43,7 +43,7 @@
             card.dataset.category = listing.category;
             card.dataset.size = listing.size;
             card.dataset.price = listing.price;
-            card.dataset.distance = '2.3'; // Default
+            card.dataset.distance = '2.3';
             card.dataset.name = listing.name;
             card.dataset.brand = listing.brand;
             card.dataset.description = listing.description;
@@ -67,7 +67,7 @@
                     </div>
                     <div class="item-actions">
                         <button class="btn-primary" onclick="DataManager.showFeedback('Detail page coming soon for new listings', 'info')">View Details</button>
-                        <button class="btn-secondary save-btn" onclick="event.stopPropagation(); toggleSave(this, '${listing.name.replace(/'/g, "\\'")}')">Save</button>
+                        <button class="btn-secondary save-btn" onclick="toggleSave(this, '${listing.name.replace(/'/g, "\\'")}')">Save</button>
                     </div>
                 </div>
             `;
@@ -82,6 +82,7 @@
         });
     }
 
+    // FIXED: Update all save buttons to reflect current saved state
     function updateAllSaveButtons() {
         const saveButtons = document.querySelectorAll('.save-btn');
         saveButtons.forEach(btn => {
@@ -93,6 +94,10 @@
                 btn.textContent = '✓ Saved';
                 btn.style.background = '#333';
                 btn.style.color = 'white';
+            } else {
+                btn.textContent = 'Save';
+                btn.style.background = 'white';
+                btn.style.color = 'black';
             }
         });
     }
@@ -273,7 +278,7 @@
     updateResultsCount(visibleItems);
 })();
 
-// Toggle save button (global function)
+// FIXED: Toggle save button with proper syncing
 function toggleSave(btn, itemName) {
     // Check if logged in
     if (!DataManager.isLoggedIn()) {
@@ -301,7 +306,11 @@ function toggleSave(btn, itemName) {
 
     if (!itemName) return;
 
-    if (btn.textContent === 'Save' || btn.textContent.trim() === 'Save') {
+    // FIXED: Check current state and toggle properly
+    const isCurrentlySaved = DataManager.isItemSaved(itemName);
+    
+    if (!isCurrentlySaved) {
+        // Save the item
         if (DataManager.addSavedItem(itemName)) {
             btn.textContent = '✓ Saved';
             btn.style.background = '#333';
@@ -309,6 +318,7 @@ function toggleSave(btn, itemName) {
             DataManager.showFeedback('Added to saved items!', 'success');
         }
     } else {
+        // Unsave the item
         DataManager.removeSavedItem(itemName);
         btn.textContent = 'Save';
         btn.style.background = 'white';

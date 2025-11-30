@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadSavedItems();
     loadReservations();
-    loadPurchaseHistory();
+    updatePurchaseHistoryButton();
     calculateAndDisplayImpact();
 });
 
@@ -54,7 +54,7 @@ function loadSavedItems() {
     });
 }
 
-// Load active reservations
+// FIXED: Load active reservations with SAME styling as saved items
 function loadReservations() {
     const reservations = DataManager.getReservations();
     const allItems = DataManager.getAllItems();
@@ -69,30 +69,44 @@ function loadReservations() {
         return;
     }
 
-    reservations.forEach((reservation, index) => {
+    // Create grid container with same class as saved items
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'saved-items-grid';
+    
+    reservations.forEach((reservation) => {
         const itemInfo = allItems[reservation.itemName];
         if (!itemInfo) return;
 
         const card = document.createElement('div');
-        card.className = 'customer-reservation-card';
+        card.className = 'saved-item-card';
+        card.style.border = '2px solid #27ae60'; // Green border for reserved items
         card.innerHTML = `
-            <div class="item-image">
-                <img src="${itemInfo.image}" alt="${reservation.itemName}" class="item-image-actual">
+            <div class="saved-item-image">
+                <img src="${itemInfo.image}" alt="${reservation.itemName}">
+                <div style="position: absolute; top: 8px; right: 8px; background: #27ae60; color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">
+                    RESERVED
+                </div>
             </div>
-            <div class="item-details">
-                <h3>${reservation.itemName}</h3>
-                <p class="item-meta">Size: ${itemInfo.size} | Reserved ${reservation.date}</p>
-                <p class="store-info"><strong>${reservation.store}</strong> - ${reservation.distance}</p>
-                <p class="expire-time">Hold expires: <strong>${reservation.expires}</strong></p>
-                <p class="impact-text">Saves ${itemInfo.co2} lbs CO2 when purchased</p>
-                <div class="item-actions">
+            <div class="saved-item-details">
+                <h4>${reservation.itemName}</h4>
+                <p class="item-meta">${itemInfo.size} | ${itemInfo.store}</p>
+                <p class="item-price">${itemInfo.priceDisplay}</p>
+                <p style="color: #e67e22; font-size: 12px; margin: 5px 0; font-weight: 600;">
+                    ⏰ Expires: ${reservation.expires}
+                </p>
+                <p style="color: #27ae60; font-size: 12px; margin: 5px 0;">
+                    🌍 Saves ${itemInfo.co2} lbs CO2
+                </p>
+                <div class="saved-item-actions">
                     <button class="btn-primary" onclick="viewDirections('${reservation.store}')">Get Directions</button>
                     <button class="btn-secondary" onclick="cancelReservation('${reservation.itemName.replace(/'/g, "\\'")}')">Cancel Hold</button>
                 </div>
             </div>
         `;
-        container.appendChild(card);
+        gridContainer.appendChild(card);
     });
+    
+    container.appendChild(gridContainer);
 
     // Add tip text
     const tip = document.createElement('p');
@@ -101,19 +115,18 @@ function loadReservations() {
     container.appendChild(tip);
 }
 
-// Load purchase history - ENHANCED VERSION
-function loadPurchaseHistory() {
-    const history = DataManager.getPurchaseHistory();
-    
-    // Update the Quick Actions button to show the purchase history page
-    const purchaseHistoryBtn = document.querySelector('.action-btn[onclick*="Purchase History"]');
-    if (purchaseHistoryBtn) {
-        purchaseHistoryBtn.onclick = function() { showPurchaseHistoryPage(); };
-    }
+// Update purchase history button to open modal
+function updatePurchaseHistoryButton() {
+    const purchaseHistoryBtns = document.querySelectorAll('.action-btn');
+    purchaseHistoryBtns.forEach(btn => {
+        if (btn.textContent.includes('Purchase History')) {
+            btn.onclick = function() { openPurchaseHistoryPage(); };
+        }
+    });
 }
 
-// NEW: Show purchase history in a detailed view
-function showPurchaseHistoryPage() {
+// WORKING Purchase History Page
+function openPurchaseHistoryPage() {
     const history = DataManager.getPurchaseHistory();
     const allItems = DataManager.getAllItems();
     
@@ -121,7 +134,7 @@ function showPurchaseHistoryPage() {
     modal.className = 'modal';
     modal.style.display = 'flex';
     modal.innerHTML = `
-        <div class="modal-content" style="max-width: 900px; max-height: 85vh; overflow-y: auto;">
+        <div class="modal-content" style="max-width: 1000px; max-height: 85vh; overflow-y: auto;">
             <span class="modal-close" onclick="this.closest('.modal').remove()">&times;</span>
             <h2>Purchase History</h2>
             <p style="color: #666; margin-bottom: 25px;">Your sustainable shopping journey</p>
@@ -131,33 +144,54 @@ function showPurchaseHistoryPage() {
                     <p>No purchase history yet. <a href="browse.html">Start shopping</a> to build your sustainable wardrobe!</p>
                 </div>
             ` : `
-                <div class="saved-items-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                <div class="saved-items-grid">
                     ${history.map(purchase => {
                         const itemInfo = allItems[purchase.itemName];
                         if (!itemInfo) return '';
                         
                         return `
                             <div class="saved-item-card">
-                                <div class="saved-item-image" style="height: 150px;">
+                                <div class="saved-item-image" style="cursor: default;">
                                     <img src="${itemInfo.image}" alt="${purchase.itemName}">
                                 </div>
                                 <div class="saved-item-details">
-                                    <h4 style="font-size: 15px;">${purchase.itemName}</h4>
-                                    <p class="item-meta" style="font-size: 12px;">${itemInfo.size}</p>
-                                    <p class="item-price" style="font-size: 18px;">${itemInfo.priceDisplay}</p>
-                                    <p style="font-size: 12px; color: #27ae60; margin-top: 5px;">Purchased ${purchase.date}</p>
-                                    <p style="font-size: 11px; color: #666; margin-top: 5px;">Saved ${itemInfo.co2} lbs CO2</p>
+                                    <h4>${purchase.itemName}</h4>
+                                    <p class="item-meta">${itemInfo.size}</p>
+                                    <p class="item-price">${itemInfo.priceDisplay}</p>
+                                    <p style="font-size: 12px; color: #27ae60; margin-top: 8px; font-weight: 600;">
+                                        ✓ Purchased ${purchase.date}
+                                    </p>
+                                    <p style="font-size: 11px; color: #666; margin-top: 5px;">
+                                        Saved ${itemInfo.co2} lbs CO2, ${itemInfo.water} gal water
+                                    </p>
                                 </div>
                             </div>
                         `;
                     }).join('')}
                 </div>
                 
-                <div style="margin-top: 30px; padding: 20px; background: #e8f5e9; border-radius: 12px;">
-                    <h3 style="margin-bottom: 10px;">Your Total Impact</h3>
-                    <p style="font-size: 15px; color: #555;">
-                        Through ${history.length} sustainable purchase${history.length !== 1 ? 's' : ''}, you've made a real difference!
-                    </p>
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+                    <h3 style="margin-bottom: 15px; font-size: 20px;">🌍 Your Total Environmental Impact</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div>
+                            <p style="font-size: 28px; font-weight: 700; color: #2e7d32; margin-bottom: 5px;">
+                                ${history.reduce((sum, p) => sum + (allItems[p.itemName]?.co2 || 0), 0)} lbs
+                            </p>
+                            <p style="font-size: 14px; color: #555;">CO2 Saved</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 28px; font-weight: 700; color: #1976d2; margin-bottom: 5px;">
+                                ${history.reduce((sum, p) => sum + (allItems[p.itemName]?.water || 0), 0).toLocaleString()} gal
+                            </p>
+                            <p style="font-size: 14px; color: #555;">Water Saved</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 28px; font-weight: 700; color: #f57c00; margin-bottom: 5px;">
+                                ${history.length}
+                            </p>
+                            <p style="font-size: 14px; color: #555;">Items Purchased</p>
+                        </div>
+                    </div>
                 </div>
             `}
         </div>
@@ -176,7 +210,6 @@ function showPurchaseHistoryPage() {
 function calculateAndDisplayImpact() {
     const impact = DataManager.calculateTotalImpact();
     
-    // Update the stat cards if they exist
     const statCards = document.querySelectorAll('.stat-card');
     if (statCards.length >= 3) {
         // CO2 card
@@ -204,7 +237,6 @@ function calculateAndDisplayImpact() {
         if (wasteText) wasteText.textContent = `${Math.round(wasteProgress)}% to Waste Reducer badge`;
     }
 
-    // Update achievements based on impact
     updateAchievements(impact);
 }
 
@@ -215,7 +247,6 @@ function updateAchievements(impact) {
     achievements.forEach(card => {
         const title = card.querySelector('.achievement-title').textContent;
         
-        // Unlock achievements based on criteria
         if (title === 'Green Shopper' && impact.totalCO2 >= 25) {
             card.classList.add('unlocked');
             card.classList.remove('locked');
@@ -288,8 +319,11 @@ function confirmCancelReservation(itemName) {
     loadReservations();
 }
 
-// NEW: Edit shopping preferences
+// FIXED: Edit Preferences - now opens in properly centered modal
 function editPreferences() {
+    // Get current preferences or defaults
+    const currentPrefs = JSON.parse(sessionStorage.getItem('customerPreferences') || '{"sizes":"32x30, M, 9","stores":"Goodwill Benton, Thrifty Village","categories":["Vintage","Outdoor Gear","Streetwear"]}');
+    
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.style.display = 'flex';
@@ -299,27 +333,27 @@ function editPreferences() {
             <h2>Edit Shopping Preferences</h2>
             <form onsubmit="savePreferences(event)">
                 <label>Preferred Sizes (comma-separated)</label>
-                <input type="text" id="pref-sizes" value="32x30, M, 9" placeholder="e.g., 32x32, L, 10">
+                <input type="text" id="pref-sizes" value="${currentPrefs.sizes}" placeholder="e.g., 32x32, L, 10" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <label>Favorite Stores (comma-separated)</label>
-                <input type="text" id="pref-stores" value="Goodwill Benton, Thrifty Village" placeholder="e.g., Goodwill, Salvation Army">
+                <input type="text" id="pref-stores" value="${currentPrefs.stores}" placeholder="e.g., Goodwill, Salvation Army" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
                 
                 <label>Interested Categories</label>
                 <div style="display: flex; flex-direction: column; gap: 8px; margin: 10px 0;">
                     <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" checked> Vintage
+                        <input type="checkbox" value="Vintage" ${currentPrefs.categories.includes('Vintage') ? 'checked' : ''}> Vintage
                     </label>
                     <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" checked> Outdoor Gear
+                        <input type="checkbox" value="Outdoor Gear" ${currentPrefs.categories.includes('Outdoor Gear') ? 'checked' : ''}> Outdoor Gear
                     </label>
                     <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" checked> Streetwear
+                        <input type="checkbox" value="Streetwear" ${currentPrefs.categories.includes('Streetwear') ? 'checked' : ''}> Streetwear
                     </label>
                     <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox"> Designer
+                        <input type="checkbox" value="Designer" ${currentPrefs.categories.includes('Designer') ? 'checked' : ''}> Designer
                     </label>
                     <label style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox"> Workwear
+                        <input type="checkbox" value="Workwear" ${currentPrefs.categories.includes('Workwear') ? 'checked' : ''}> Workwear
                     </label>
                 </div>
                 
@@ -329,7 +363,6 @@ function editPreferences() {
     `;
     document.body.appendChild(modal);
     
-    // Close on outside click
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
             modal.remove();
@@ -340,18 +373,37 @@ function editPreferences() {
 function savePreferences(event) {
     event.preventDefault();
     
-    // Get values
     const sizes = document.getElementById('pref-sizes').value;
     const stores = document.getElementById('pref-stores').value;
     
-    // Update display in settings box
-    const settingBox = document.querySelector('.setting-box');
-    if (settingBox) {
-        settingBox.querySelector('p:nth-of-type(1)').innerHTML = `Preferred Sizes: <strong>${sizes}</strong>`;
-        settingBox.querySelector('p:nth-of-type(2)').innerHTML = `Favorite Stores: <strong>${stores}</strong>`;
-    }
+    // Get selected categories
+    const categories = [];
+    document.querySelectorAll('.modal input[type="checkbox"]:checked').forEach(cb => {
+        categories.push(cb.value);
+    });
     
-    // Close modal and show success
+    // Save to session storage
+    sessionStorage.setItem('customerPreferences', JSON.stringify({
+        sizes: sizes,
+        stores: stores,
+        categories: categories
+    }));
+    
+    // Update display in the settings box
+    const settingBoxes = document.querySelectorAll('.setting-box');
+    settingBoxes.forEach(box => {
+        if (box.querySelector('h4').textContent === 'Shopping Preferences') {
+            const categoryText = categories.length > 0 ? categories.join(', ') : 'None selected';
+            box.innerHTML = `
+                <h4>Shopping Preferences</h4>
+                <p>Preferred Sizes: <strong>${sizes}</strong></p>
+                <p>Favorite Stores: <strong>${stores}</strong></p>
+                <p>Interested In: <strong>${categoryText}</strong></p>
+                <button class="btn-secondary" onclick="editPreferences()">Edit Preferences</button>
+            `;
+        }
+    });
+    
     document.querySelector('.modal').remove();
     DataManager.showFeedback('Preferences updated successfully!', 'success');
 }
@@ -361,7 +413,7 @@ function saveSettings() {
     DataManager.showFeedback('Settings saved successfully!', 'success');
 }
 
-// Show feedback (uses DataManager)
+// Show feedback
 function showFeedback(message, type) {
     DataManager.showFeedback(message, type);
 }
