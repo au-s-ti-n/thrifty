@@ -54,7 +54,7 @@ function loadSavedItems() {
     });
 }
 
-// FIXED: Load active reservations with SAME styling as saved items
+// Load active reservations
 function loadReservations() {
     const reservations = DataManager.getReservations();
     const allItems = DataManager.getAllItems();
@@ -319,7 +319,6 @@ function confirmCancelReservation(itemName) {
     loadReservations();
 }
 
-// FIXED: Edit Preferences - now opens in properly centered modal
 function editPreferences() {
     // Get current preferences or defaults
     const currentPrefs = JSON.parse(sessionStorage.getItem('customerPreferences') || '{"sizes":"32x30, M, 9","stores":"Goodwill Benton, Thrifty Village","categories":["Vintage","Outdoor Gear","Streetwear"]}');
