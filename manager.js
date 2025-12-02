@@ -270,7 +270,8 @@ function processImageWithAI(imageData) {
         ];
         
         // Randomly select one
-        const recognizedData = possibleItems[Math.floor(Math.random() * possibleItems.length)];
+        // const recognizedData = possibleItems[Math.floor(Math.random() * possibleItems.length)];'
+        const recognizedData = possibleItems[0];
         
         // Fill form fields with animation
         setTimeout(() => {
