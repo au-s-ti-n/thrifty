@@ -29,31 +29,36 @@
         </div>
     </nav>
     
-    <div class="contact-container">
-        <h2>Contact Us</h2>
+    <!-- ADD THIS WRAPPER -->
+    <div class="contact-page-wrapper">
+        <div class="contact-container">
+            <h2>Contact Us</h2>
 
-        <form id="contactForm" class="contact-form">
-            
-            <label>First Name</label>
-            <input id="firstName" type="text" placeholder="Enter first name">
-            <p class="error" id="firstNameError"></p>
+            <form id="contactForm" class="contact-form">
+                
+                <label>First Name</label>
+                <input id="firstName" type="text" placeholder="Enter first name">
+                <p class="error" id="firstNameError"></p>
 
-            <label>Last Name</label>
-            <input id="lastName" type="text" placeholder="Enter last name">
-            <p class="error" id="lastNameError"></p>
+                <label>Last Name</label>
+                <input id="lastName" type="text" placeholder="Enter last name">
+                <p class="error" id="lastNameError"></p>
 
-            <label>Email</label>
-            <input id="email" type="email" placeholder="Enter your email">
-            <p class="error" id="emailError"></p>
+                <label>Email</label>
+                <input id="email" type="email" placeholder="Enter your email">
+                <p class="error" id="emailError"></p>
 
-            <label>Message</label>
-            <textarea id="message" placeholder="Enter your message"></textarea>
-            <p class="error" id="messageError"></p>
+                <label>Message</label>
+                <textarea id="message" placeholder="Enter your message"></textarea>
+                <p class="error" id="messageError"></p>
 
-            <button type="submit" class="btn-primary">Send message</button>
-            <p id="status"></p>
-        </form>
+                <button type="submit" class="btn-primary">Send message</button>
+                <p id="status"></p>
+            </form>
+        </div>
     </div>
+    <!-- END WRAPPER -->
+    
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -81,6 +86,7 @@
             <p>&copy; 2025 Thrifty. Built with sustainability in mind.</p>
         </div>
     </footer>
+    
     <script src="dataManager.js"></script>
     <script src="nav.js"></script>
     <script src="contact.js"></script>

@@ -1,12 +1,28 @@
 /* contact.css - Styles for contact.html */
 
+/* Make body full height with flexbox to push footer down */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contact page wrapper to allow footer at bottom */
+.contact-page-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 40px;
+}
+
 .contact-container {
-    max-width: 500px;
-    margin: 120px auto;
+    width: 500px;
+    max-width: 100%;
     padding: 30px;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 .contact-container h2 {
@@ -29,6 +45,7 @@
     border-radius: 10px;
     font-size: 15px;
     margin-bottom: 5px;
+    box-sizing: border-box; /* IMPORTANT: prevents overflow */
 }
 
 .contact-form textarea {
@@ -47,4 +64,16 @@
     margin-top: 10px;
     font-size: 14px;
     text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-page-wrapper {
+        padding: 80px 20px 40px;
+    }
+    
+    .contact-container {
+        width: 100%;
+        padding: 20px;
+    }
 }
